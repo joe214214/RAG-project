@@ -1,0 +1,29 @@
+[
+  {
+    "chunk_id": "ai_investments_super_0_fine_0",
+    "level": "fine",
+    "source_doc": "ai_investments.txt",
+    "parent_chunk": "ai_investments_super_0",
+    "start_token": 0,
+    "end_token": 22,
+    "path": "data\\chunks\\fine\\ai_investments_super_0_fine_0.txt"
+  },
+  {
+    "chunk_id": "apple_super_0_fine_0",
+    "level": "fine",
+    "source_doc": "apple.txt",
+    "parent_chunk": "apple_super_0",
+    "start_token": 0,
+    "end_token": 15,
+    "path": "data\\chunks\\fine\\apple_super_0_fine_0.txt"
+  },
+  {
+    "chunk_id": "microsoft_super_0_fine_0",
+    "level": "fine",
+    "source_doc": "microsoft.txt",
+    "parent_chunk": "microsoft_super_0",
+    "start_token": 0,
+    "end_token": 14,
+    "path": "data\\chunks\\fine\\microsoft_super_0_fine_0.txt"
+  }
+]
