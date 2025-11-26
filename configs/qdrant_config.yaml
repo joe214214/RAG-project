@@ -1,0 +1,90 @@
+# =============================================================================
+# Qdrant Vector Database Configuration
+# Query-Aware RAG System - ECE 750
+# =============================================================================
+
+qdrant:
+  host: "localhost"
+  port: 6333
+  grpc_port: 6334
+  
+  # OLTP Collection (factoid queries - optimized for speed)
+  oltp_collection:
+    name: "rag_oltp_chunks"
+    distance: "Cosine"  # Cosine similarity for normalized vectors
+    hnsw_config:
+      m: 16              # Number of edges per node
+      ef_construct: 128  # Build-time search width
+    search_params:
+      ef: 50             # Search-time candidates (lower = faster)
+  
+  # OLAP Collection (analytical queries - optimized for recall)
+  olap_collection:
+    name: "rag_olap_chunks"
+    distance: "Cosine"
+    hnsw_config:
+      m: 32              # More edges for better recall
+      ef_construct: 256  # Higher build quality
+    search_params:
+      ef: 200            # More candidates for better accuracy
+
+# =============================================================================
+# Embedding Configuration
+# =============================================================================
+embeddings:
+  model_name: "sentence-transformers/all-MiniLM-L6-v2"
+  batch_size: 32
+  vector_size: 384
+  normalize: true
+
+# =============================================================================
+# Paths
+# =============================================================================
+paths:
+  data_dir: "data"
+  text_dir: "data/text"
+  chunks_dir: "data/chunks"
+  embeddings_dir: "data/embeddings"
+  models_dir: "models"
+  results_dir: "results"
+
+# =============================================================================
+# Retrieval Settings
+# =============================================================================
+retrieval:
+  oltp:
+    top_k: 10
+    use_reranker: false  # Option A: no reranking for speed
+    hybrid_alpha: 0.3    # BM25 weight in hybrid search
+  
+  olap:
+    top_k: 50
+    rerank_top_k: 10
+    use_reranker: true   # Always rerank for OLAP
+    hybrid_alpha: 0.5
+
+# =============================================================================
+# Reranker Configuration
+# =============================================================================
+reranker:
+  model_name: "cross-encoder/ms-marco-MiniLM-L-6-v2"
+  batch_size: 32
+  max_length: 512
+
+# =============================================================================
+# Classifier Configuration
+# =============================================================================
+classifier:
+  model_name: "distilbert-base-uncased"
+  num_labels: 2  # OLTP vs OLAP
+  threshold: 0.5
+
+# =============================================================================
+# LLM Configuration
+# =============================================================================
+llm:
+  provider: "openai"  # openai, azure, anthropic
+  model_name: "gpt-4o-mini"
+  max_tokens: 1024
+  temperature: 0.0
+
