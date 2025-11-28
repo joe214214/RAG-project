@@ -576,3 +576,43 @@ In conclusion, this work demonstrates the effectiveness of our proposed approach
         print(f"    Text: {chunk.text[:60]}...")
     
     print("\n✅ Chunking test complete!")
+
+
+## Primary Findings
+
+Our primary finding is that the new approach outperforms existing methods by a substantial margin. This was consistent across different test conditions and datasets.
+
+## Secondary Findings
+
+Additional analysis revealed interesting patterns in user behavior. These secondary findings suggest opportunities for future research.
+
+# Conclusion
+
+In conclusion, this work demonstrates the effectiveness of our proposed approach. Future work should explore additional applications and edge cases.
+"""
+
+    print("=" * 60)
+    print("Multi-Granular Chunking Test")
+    print("=" * 60)
+    
+    chunker = create_chunker()
+    result = chunker.chunk_document(sample_text, source_file="sample_doc")
+    
+    print(f"\n📄 OLTP Chunks: {len(result['oltp'])}")
+    for chunk in result['oltp'][:2]:
+        print(f"  [{chunk.id}] {chunk.text[:80]}...")
+        print(f"    Section: {chunk.section}, Tokens: ~{len(chunk.text.split()) * 1.3:.0f}")
+    
+    print(f"\n📚 OLAP Parent Chunks: {len(result['olap_parents'])}")
+    for chunk in result['olap_parents'][:2]:
+        print(f"  [{chunk.id}] Section: {chunk.section}")
+        print(f"    Children: {len(chunk.child_ids)}, Level: {chunk.level}")
+        print(f"    Text: {chunk.text[:60]}...")
+    
+    print(f"\n📑 OLAP Child Chunks: {len(result['olap_children'])}")
+    for chunk in result['olap_children'][:2]:
+        print(f"  [{chunk.id}] Parent: {chunk.parent_id}")
+        print(f"    Section: {chunk.section}")
+        print(f"    Text: {chunk.text[:60]}...")
+    
+    print("\n✅ Chunking test complete!")

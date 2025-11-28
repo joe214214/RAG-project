@@ -1,3 +1,4 @@
 classifier
 classifier2
 .cursor/rules/avoid-fallbacks.mdc
+.env
