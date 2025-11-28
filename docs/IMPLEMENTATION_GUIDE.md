@@ -78,7 +78,9 @@ This project implements a **Query-Aware RAG (Retrieval-Augmented Generation) Sys
 | 3 | Chunking | ✅ Done | Multi-granular OLTP/OLAP chunking |
 | 4 | MPI Embedding | ✅ Created | Script ready for testing |
 | 4 | Qdrant Client | ✅ Done | Python wrapper with HNSW config |
-| 5 | Reranker | ⏳ Pending | CrossEncoder implementation |
+| 4 | Ingestion Pipeline | ✅ Done | End-to-end: chunk → embed → store |
+| 5 | Rerankers | ✅ Done | TinyBERT (OLTP), BGE-large (OLAP) |
+| 5 | Quality Evaluation | ✅ Done | MRR, Recall@k, NDCG@k metrics |
 | 5 | Classifier | ⏳ Pending | DistilBERT OLTP/OLAP router |
 | 6 | LLM Integration | ⏳ Pending | OpenAI/Azure API |
 | 7 | Scaling Tests | ⏳ Pending | Corpus and MPI experiments |
@@ -296,6 +298,78 @@ python scripts/mpi_embed.py --single-process --sample-chunks
 mpirun -np 4 python scripts/mpi_embed.py --input chunks.json --output embeddings.npy
 ```
 
+### 5. Rerankers
+
+**Location:** `rerankers/cross_encoder_reranker.py`
+
+**Available Models:**
+
+| Pipeline | Model | HuggingFace ID | Parameters | Latency (cached) |
+|----------|-------|----------------|------------|------------------|
+| OLTP | None | - | - | 0ms |
+| OLTP | TinyBERT | cross-encoder/ms-marco-TinyBERT-L-2-v2 | 4.4M | 500ms |
+| OLAP | MiniLM | cross-encoder/ms-marco-MiniLM-L-6-v2 | 22M | 550ms |
+| OLAP | BGE-base | BAAI/bge-reranker-base | 109M | 1.1s |
+| OLAP | **BGE-large** | BAAI/bge-reranker-large | 335M | **1.4s** |
+
+**Recommended Configuration:**
+- **OLTP:** No reranker (vector search is fast and sufficient)
+- **OLAP:** BGE-large (best quality/latency tradeoff)
+
+**Usage:**
+```python
+from rerankers import OLTPReranker, OLAPReranker, RerankerFactory
+
+# OLTP: No reranker (default) or TinyBERT
+oltp_reranker = OLTPReranker(use_reranker=False)
+# or
+oltp_reranker = OLTPReranker(use_reranker=True)  # TinyBERT
+
+# OLAP: BGE-large (recommended)
+olap_reranker = OLAPReranker(model="bge-large")
+
+# Auto-routing based on query type
+factory = RerankerFactory(olap_model="bge-large")
+results = factory.rerank(query, documents, query_type="olap", top_k=10)
+```
+
+**Running on GPU (ecetesla1):**
+```bash
+# ecetesla0 has Tesla P4 (CUDA 6.1, incompatible with PyTorch)
+# ecetesla1 has RTX 3070 (CUDA 8.6, compatible)
+
+ssh ecetesla1
+source ~/rag-env/bin/activate.csh
+cd ~/RAG-project
+python scripts/test_rerankers.py --qdrant-host ecetesla0 --olap-model bge-large
+```
+
+### 6. Quality Evaluation
+
+**Location:** `scripts/evaluate_rerankers.py`
+
+**Metrics:**
+
+| Metric | Formula | Description |
+|--------|---------|-------------|
+| **MRR** | 1/rank of first relevant | How quickly you find a relevant doc |
+| **Recall@k** | relevant_in_top_k / total_relevant | Coverage of relevant docs |
+| **NDCG@k** | DCG / ideal_DCG | Ranking quality with position weighting |
+| **Precision@k** | relevant_in_top_k / k | Proportion of top-k that are relevant |
+
+**Ground Truth Sources:**
+- **MS MARCO:** qrels (query relevance judgments)
+- **HotpotQA:** supporting_facts (passages that answer the question)
+
+**Usage:**
+```bash
+# Evaluate baseline (no reranker)
+python scripts/evaluate_rerankers.py --qdrant-host ecetesla0 --olap-model none
+
+# Evaluate with BGE-large
+python scripts/evaluate_rerankers.py --qdrant-host ecetesla0 --olap-model bge-large
+```
+
 ---
 
 ## How to Reproduce
@@ -398,10 +472,17 @@ RAG-project/
 │   └── datasets/               # Cached downloaded data
 ├── preprocess/
 │   └── chunking.py             # Multi-granular chunking
+├── rerankers/
+│   ├── __init__.py             # Exports OLTPReranker, OLAPReranker
+│   └── cross_encoder_reranker.py  # CrossEncoder implementations
 ├── scripts/
 │   ├── test_loaders.py         # Test data loaders
 │   ├── test_chunking.py        # Test chunking
 │   ├── test_hnsw.py            # Test Qdrant HNSW
+│   ├── test_retrieval.py       # Test retrieval from Qdrant
+│   ├── test_rerankers.py       # Test reranker models
+│   ├── evaluate_rerankers.py   # Quality evaluation (MRR, Recall, NDCG)
+│   ├── ingest_pipeline.py      # End-to-end ingestion pipeline
 │   ├── mpi_embed.py            # MPI embedding generation
 │   └── setup_qdrant.sh         # Qdrant setup script
 ├── vector_stores/
@@ -415,16 +496,22 @@ RAG-project/
 
 ## Next Steps
 
-| Phase | Task | Priority |
-|-------|------|----------|
-| 4 | Test MPI embedding on ecetesla0 | High |
-| 4 | Ingest chunks into Qdrant | High |
-| 5 | Implement CrossEncoder reranker | Medium |
-| 5 | Train DistilBERT classifier | Medium |
-| 6 | Integrate OpenAI/Azure LLM | Medium |
-| 7 | Run corpus scaling experiments | High |
-| 7 | Run MPI node scaling experiments | High |
-| 8 | Write IEEE report and documentation | High |
+| Phase | Task | Priority | Status |
+|-------|------|----------|--------|
+| 5 | Train DistilBERT classifier | High | ⏳ Pending |
+| 6 | Integrate OpenAI/Azure LLM | Medium | ⏳ Pending |
+| 7 | Run corpus scaling experiments (10K→1M) | High | ⏳ Pending |
+| 7 | Run MPI node scaling experiments (1→4 nodes) | High | ⏳ Pending |
+| 7 | Run quality evaluation with labeled data | High | ⏳ Pending |
+| 8 | Write IEEE report and documentation | High | ⏳ Pending |
+
+### Completed
+- ✅ Qdrant setup with HNSW on ecetesla0
+- ✅ Data loaders (MS MARCO, HotpotQA)
+- ✅ Multi-granular chunking (OLTP/OLAP)
+- ✅ Ingestion pipeline (chunk → embed → store)
+- ✅ Rerankers (TinyBERT for OLTP, BGE-large for OLAP)
+- ✅ Quality evaluation script (MRR, Recall@k, NDCG@k)
 
 ---
 

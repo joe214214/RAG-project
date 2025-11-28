@@ -1,0 +1,97 @@
+﻿============================================================
+COMPREHENSIVE CLASSIFIER VALIDATION
+============================================================
+Loading classifier from classifier/classifier_minilm_l12...
+Loading 50 Natural Questions samples...
+Loading 30 ELI5 samples...
+Warning: Could not load ELI5 dataset: Dataset 'eli5' is defunct and no longer accessible due to unavailability of the source data
+
+Total validation examples: 99
+  - Natural Questions: 50
+  - ELI5: 0
+  - Adversarial: 23
+
+Running predictions...
+
+Running heuristic baseline...
+
+============================================================
+VALIDATION REPORT
+============================================================
+
+≡ƒôè OVERALL METRICS
+   Accuracy: 66.7%
+   Macro F1: 0.452
+
+≡ƒôê PER-CLASS METRICS
+   Class        Prec   Recall       F1  Support
+   ----------------------------------------
+   OLTP        0.736    0.865    0.795       74
+   OLAP        0.167    0.080    0.108       25
+
+≡ƒôï CONFUSION MATRIX
+              Pred OLTP  Pred OLAP
+   True OLTP        64        10
+   True OLAP        23         2
+
+≡ƒöì BY SOURCE (Fresh Holdout Test)
+   Γ¥î adversarial: 30.4% (23 examples)
+   Γ¥î synthetic: 38.5% (26 examples)
+   Γ£à natural_questions: 98.0% (50 examples)
+
+≡ƒôè BY DIFFICULTY
+   Γ¥î medium: 25.0% (16 examples)
+   Γ¥î hard: 20.0% (20 examples)
+   Γ£à easy: 92.1% (63 examples)
+
+≡ƒöæ KEYWORD SHORTCUT ANALYSIS
+   olap_keyword_present: 36.8% (19 examples)
+   oltp_keyword_present: 71.0% (31 examples)
+   no_keywords: 75.5% (49 examples)
+
+≡ƒôë CONFIDENCE ANALYSIS
+   Correct predictions: mean confidence = 0.949
+   Wrong predictions: mean confidence = 0.949
+   Calibration gap: 0.098 (positive = overconfident)
+
+≡ƒôÅ QUERY LENGTH ANALYSIS
+   short_queries (<8 words): 40.5% (37 examples)
+   medium_queries (8-14 words): 85.0% (60 examples)
+   long_queries (15+ words): 0.0% (2 examples)
+
+≡ƒÄ» HEURISTIC BASELINE COMPARISON
+   Heuristic baseline: 84.8% accuracy
+   Transformer model:  66.7% accuracy
+   Improvement:        -18.2%
+   ΓÜá∩╕Å WARNING: Model is only -18.2% better than keywords!
+      Task may be too easy or model learned keyword shortcuts.
+
+Γ¥î MISCLASSIFIED EXAMPLES (20 shown)
+   [natural_questions] True:oltp Pred:olap Conf:0.99
+      swan lake the sleeping beauty and the nutcracker are three famous ball...
+   [adversarial] True:olap Pred:oltp Conf:1.00
+      What is inflation?...
+   [adversarial] True:olap Pred:oltp Conf:1.00
+      Who benefits from AI?...
+   [adversarial] True:olap Pred:oltp Conf:1.00
+      Why is the sky blue?...
+   [adversarial] True:olap Pred:oltp Conf:1.00
+      What causes cancer?...
+   [adversarial] True:olap Pred:oltp Conf:1.00
+      Is democracy good?...
+   [adversarial] True:olap Pred:oltp Conf:1.00
+      What makes a good leader?...
+   [adversarial] True:olap Pred:oltp Conf:1.00
+      Should we use nuclear energy?...
+   [adversarial] True:olap Pred:oltp Conf:1.00
+      What is success?...
+   [adversarial] True:oltp Pred:olap Conf:1.00
+      Who was the person that first set foot on the moon during the Apollo m...
+
+============================================================
+VALIDATION VERDICT
+============================================================
+Γ¥î CONCERN: Model may have overfit to training distribution
+   Investigate: data leakage, keyword shortcuts, train/test overlap
+
+Results saved to results/validation_minilm.json

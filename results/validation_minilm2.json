@@ -1,0 +1,306 @@
+{
+  "model_path": "classifier2/microsoft_MiniLM-L12-H384-uncased",
+  "total_examples": 99,
+  "overall": {
+    "accuracy": 0.6161616161616161,
+    "macro_f1": 0.4258241758241758
+  },
+  "per_class": {
+    "oltp": {
+      "precision": 0.7195121951219512,
+      "recall": 0.7972972972972973,
+      "f1": 0.7564102564102564,
+      "support": 74
+    },
+    "olap": {
+      "precision": 0.11764705882352941,
+      "recall": 0.08,
+      "f1": 0.09523809523809523,
+      "support": 25
+    }
+  },
+  "confusion_matrix": {
+    "labels": [
+      "oltp",
+      "olap"
+    ],
+    "matrix": [
+      [
+        59,
+        15
+      ],
+      [
+        23,
+        2
+      ]
+    ]
+  },
+  "by_source": {
+    "adversarial": {
+      "count": 23,
+      "accuracy": 0.30434782608695654
+    },
+    "synthetic": {
+      "count": 26,
+      "accuracy": 0.3076923076923077
+    },
+    "natural_questions": {
+      "count": 50,
+      "accuracy": 0.92
+    }
+  },
+  "by_difficulty": {
+    "medium": {
+      "count": 16,
+      "accuracy": 0.25
+    },
+    "hard": {
+      "count": 20,
+      "accuracy": 0.2
+    },
+    "easy": {
+      "count": 63,
+      "accuracy": 0.8412698412698413
+    }
+  },
+  "keyword_analysis": {
+    "olap_keyword_present": {
+      "correct": 8,
+      "total": 19,
+      "accuracy": 0.42105263157894735
+    },
+    "oltp_keyword_present": {
+      "correct": 20,
+      "total": 31,
+      "accuracy": 0.6451612903225806
+    },
+    "no_keywords": {
+      "correct": 33,
+      "total": 49,
+      "accuracy": 0.673469387755102
+    }
+  },
+  "confidence_analysis": {
+    "correct_predictions": {
+      "count": 61,
+      "mean_confidence": 0.9936984933790614,
+      "min_confidence": 0.8290463089942932,
+      "max_confidence": 0.9999450445175171
+    },
+    "wrong_predictions": {
+      "count": 38,
+      "mean_confidence": 0.999524391011188,
+      "min_confidence": 0.9889335632324219,
+      "max_confidence": 0.9999440908432007
+    },
+    "calibration_gap": 0.10721952513772615,
+    "calibration_bins": [
+      {
+        "bin": "0.8-0.9",
+        "count": 1,
+        "accuracy": 1.0,
+        "mean_confidence": 0.8290463089942932,
+        "gap": -0.1709536910057068
+      },
+      {
+        "bin": "0.9-1.0",
+        "count": 98,
+        "accuracy": 0.6122448979591837,
+        "mean_confidence": 0.9976376392403428,
+        "gap": 0.3853927412811591
+      }
+    ]
+  },
+  "length_analysis": {
+    "short_queries (<8 words)": {
+      "count": 37,
+      "accuracy": 0.32432432432432434
+    },
+    "medium_queries (8-14 words)": {
+      "count": 60,
+      "accuracy": 0.8166666666666667
+    },
+    "long_queries (15+ words)": {
+      "count": 2,
+      "accuracy": 0.0
+    }
+  },
+  "heuristic_baseline": {
+    "accuracy": 0.8484848484848485,
+    "macro_f1": 0.7397020157756353,
+    "per_class": {
+      "oltp": {
+        "precision": 0.8314606741573034,
+        "recall": 1.0,
+        "f1": 0.9079754601226994
+      },
+      "olap": {
+        "precision": 1.0,
+        "recall": 0.4,
+        "f1": 0.5714285714285714
+      }
+    }
+  },
+  "misclassified": [
+    {
+      "query": "who was the first lady nominated member of the rajya sabha",
+      "true_label": "oltp",
+      "predicted": "olap",
+      "confidence": 1.0,
+      "source": "natural_questions",
+      "difficulty": "easy"
+    },
+    {
+      "query": "when was the last time the world series went less than 7 games",
+      "true_label": "oltp",
+      "predicted": "olap",
+      "confidence": 1.0,
+      "source": "natural_questions",
+      "difficulty": "easy"
+    },
+    {
+      "query": "swan lake the sleeping beauty and the nutcracker are three famous ballets by",
+      "true_label": "oltp",
+      "predicted": "olap",
+      "confidence": 1.0,
+      "source": "natural_questions",
+      "difficulty": "easy"
+    },
+    {
+      "query": "lynyrd skynyrd last of a dying breed album",
+      "true_label": "oltp",
+      "predicted": "olap",
+      "confidence": 1.0,
+      "source": "natural_questions",
+      "difficulty": "easy"
+    },
+    {
+      "query": "What is inflation?",
+      "true_label": "olap",
+      "predicted": "oltp",
+      "confidence": 1.0,
+      "source": "adversarial",
+      "difficulty": "hard"
+    },
+    {
+      "query": "Who benefits from AI?",
+      "true_label": "olap",
+      "predicted": "oltp",
+      "confidence": 0.999,
+      "source": "adversarial",
+      "difficulty": "hard"
+    },
+    {
+      "query": "Why is the sky blue?",
+      "true_label": "olap",
+      "predicted": "oltp",
+      "confidence": 1.0,
+      "source": "adversarial",
+      "difficulty": "hard"
+    },
+    {
+      "query": "What causes cancer?",
+      "true_label": "olap",
+      "predicted": "oltp",
+      "confidence": 1.0,
+      "source": "adversarial",
+      "difficulty": "hard"
+    },
+    {
+      "query": "Is democracy good?",
+      "true_label": "olap",
+      "predicted": "oltp",
+      "confidence": 1.0,
+      "source": "adversarial",
+      "difficulty": "hard"
+    },
+    {
+      "query": "What makes a good leader?",
+      "true_label": "olap",
+      "predicted": "oltp",
+      "confidence": 1.0,
+      "source": "adversarial",
+      "difficulty": "hard"
+    },
+    {
+      "query": "Should we use nuclear energy?",
+      "true_label": "olap",
+      "predicted": "oltp",
+      "confidence": 1.0,
+      "source": "adversarial",
+      "difficulty": "hard"
+    },
+    {
+      "query": "What is success?",
+      "true_label": "olap",
+      "predicted": "oltp",
+      "confidence": 1.0,
+      "source": "adversarial",
+      "difficulty": "hard"
+    },
+    {
+      "query": "Who was the person that first set foot on the moon during the Apollo mission?",
+      "true_label": "oltp",
+      "predicted": "olap",
+      "confidence": 1.0,
+      "source": "adversarial",
+      "difficulty": "hard"
+    },
+    {
+      "query": "In which year did the company Apple Inc. officially go public on the stock market?",
+      "true_label": "oltp",
+      "predicted": "olap",
+      "confidence": 1.0,
+      "source": "adversarial",
+      "difficulty": "hard"
+    },
+    {
+      "query": "What is the current population count of the city of Tokyo, Japan?",
+      "true_label": "oltp",
+      "predicted": "olap",
+      "confidence": 1.0,
+      "source": "adversarial",
+      "difficulty": "hard"
+    },
+    {
+      "query": "Who served as the 44th president of the United States of America?",
+      "true_label": "oltp",
+      "predicted": "olap",
+      "confidence": 1.0,
+      "source": "adversarial",
+      "difficulty": "hard"
+    },
+    {
+      "query": "How did World War 2 start?",
+      "true_label": "olap",
+      "predicted": "oltp",
+      "confidence": 0.989,
+      "source": "adversarial",
+      "difficulty": "hard"
+    },
+    {
+      "query": "Who won the 2020 election?",
+      "true_label": "oltp",
+      "predicted": "olap",
+      "confidence": 1.0,
+      "source": "adversarial",
+      "difficulty": "hard"
+    },
+    {
+      "query": "What is machine learning used for?",
+      "true_label": "olap",
+      "predicted": "oltp",
+      "confidence": 1.0,
+      "source": "adversarial",
+      "difficulty": "hard"
+    },
+    {
+      "query": "How does Google make money?",
+      "true_label": "olap",
+      "predicted": "oltp",
+      "confidence": 1.0,
+      "source": "adversarial",
+      "difficulty": "hard"
+    }
+  ]
+}

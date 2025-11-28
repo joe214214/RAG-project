@@ -99,7 +99,7 @@ Metadata filtering and query complexity
 - Graph-embedded vector types and extended query languages (TigerVector's GSQL extensions) provide native composition between vector search and graph analytics for complex OLAP queries [9].  
 
 Memory and storage planning
-- Graph-based HNSW-like indexes can be memory intensive and build-costly; distributed or compressed multi-stage indexes can reduce memory while retaining recall in the high-recall regime [5] [8].  
+- Graph-based-like indexes can be memory intensive and build-costly; distributed or compressed multi-stage indexes can reduce memory while retaining recall in the high-recall regime [5] [8].  
 - Streaming RAG demonstrates that careful prototype-selection and compact indices can achieve sub-15 ms retrieval with strict memory budgets (example: ~150 MB) in some streaming settings, indicating substantial gains from compacting or summarizing vectors for memory-constrained deployments [6].  
 
 Integration complexity and ecosystem support
