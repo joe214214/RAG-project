@@ -11,9 +11,6 @@ Models supported:
 - cross-encoder/ms-marco-MiniLM-L-6-v2: Balanced (~22M params)
 - BAAI/bge-reranker-base: High quality (~109M params)
 - BAAI/bge-reranker-large: Higher quality (~335M params)
-- zeroentropy/zerank-1: SOTA quality (~1B params)
-- zeroentropy/zerank-2: SOTA quality, outperforms Cohere/Gemini (~4B params)
-  See: https://huggingface.co/zeroentropy/zerank-2
 """
 
 import time
@@ -110,14 +107,13 @@ class CrossEncoderReranker(BaseReranker):
     - cross-encoder/ms-marco-MiniLM-L-6-v2: ~22M params, balanced
     - BAAI/bge-reranker-base: ~109M params, high quality
     - BAAI/bge-reranker-large: ~335M params, higher quality
-    - zeroentropy/zerank-1: ~1B params, SOTA
-    - zeroentropy/zerank-2: ~4B params, SOTA (outperforms Cohere, Gemini)
     """
     
     # Models that require trust_remote_code
+    # Note: zerank models removed due to size constraints
     TRUST_REMOTE_CODE_MODELS = {
-        "zeroentropy/zerank-1",
-        "zeroentropy/zerank-2",
+        # "zeroentropy/zerank-1",  # Too large (~1B params), not recommended
+        # "zeroentropy/zerank-2",  # Too large (4B params), not recommended
     }
     
     def __init__(
@@ -234,19 +230,19 @@ class OLAPReranker:
     OLAP-optimized reranker (quality priority).
     
     Recommended models (per reranker_recommendations.md):
-    - "cross-encoder/ms-marco-MiniLM-L-6-v2": Fast, decent quality
-    - "BAAI/bge-reranker-base": High quality
-    - "BAAI/bge-reranker-large": Higher quality
-    - "zeroentropy/zerank-1": SOTA quality
-    - "zeroentropy/zerank-2": SOTA, outperforms Cohere/Gemini (4B params)
+    - "cross-encoder/ms-marco-MiniLM-L-6-v2": Fast, decent quality (~22M params)
+    - "BAAI/bge-reranker-base": High quality (~109M params)
+    - "BAAI/bge-reranker-large": Higher quality (~335M params)
+    
+    Note: zerank-1 (~1B params) and zerank-2 (4B params) are too large for most systems and not recommended.
     """
     
     RECOMMENDED_MODELS = {
         "minilm": "cross-encoder/ms-marco-MiniLM-L-6-v2",
         "bge-base": "BAAI/bge-reranker-base",
         "bge-large": "BAAI/bge-reranker-large",
-        "zerank-1": "zeroentropy/zerank-1",
-        "zerank-2": "zeroentropy/zerank-2",
+        # "zerank-1": "zeroentropy/zerank-1",  # Too large (~1B params), not recommended
+        # "zerank-2": "zeroentropy/zerank-2",  # Too large (4B params), not recommended
     }
     
     def __init__(

@@ -1,0 +1,40 @@
+{
+  "dataset": "msmarco",
+  "workers": 2,
+  "max_docs": 700000,
+  "use_gpu": true,
+  "batch_size": 32,
+  "total_chunks": 813178,
+  "oltp_chunks": 113175,
+  "olap_chunks": 700003,
+  "timings": {
+    "total": 795.6155483722687,
+    "load": 4.581670045852661,
+    "chunk": 8.642999649047852,
+    "embed": 514.8362240791321,
+    "store": 267.5437710285187
+  },
+  "throughput": {
+    "chunks_per_sec": 1022.0740427504992,
+    "docs_per_sec": 879.8219208160446,
+    "chunks_per_doc": 1.1616828571428572
+  },
+  "per_worker_timings": [
+    {
+      "total_start": 1764473144.812209,
+      "load_time": 1.653531551361084,
+      "chunk_time": 5.226392030715942,
+      "embed_time": 217.05058979988098,
+      "store_time": 213.77292895317078,
+      "total_time": 741.8469684123993
+    },
+    {
+      "total_start": 1764473144.816998,
+      "load_time": 4.581670045852661,
+      "chunk_time": 8.642999649047852,
+      "embed_time": 514.8362240791321,
+      "store_time": 267.5437710285187,
+      "total_time": 795.6155483722687
+    }
+  ]
+}

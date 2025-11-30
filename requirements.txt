@@ -17,3 +17,6 @@ transformers>=4.30.0,<4.40.0
 torch>=2.0.0,<2.2.0
 fastapi>=0.110.0,<1.0.0
 uvicorn>=0.22.0,<0.31.0
+ir-datasets>=0.5.0
+openai>=1.0.0
+tiktoken>=0.5.0

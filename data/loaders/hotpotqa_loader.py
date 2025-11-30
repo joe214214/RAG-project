@@ -180,8 +180,11 @@ class HotpotQALoader:
             
             for title, sentences in zip(titles, sentences_list):
                 if title not in contexts:
+                    # Use title-based ID for exact matching with supporting facts
+                    # Format: "hotpot_ctx_{title}" matches evaluation expectations
+                    context_id = f"hotpot_ctx_{title}"
                     contexts[title] = HotpotContext(
-                        id=f"hotpot_ctx_{len(contexts)}",
+                        id=context_id,  # Title-based ID for exact matching
                         title=title,
                         sentences=sentences if isinstance(sentences, list) else [sentences],
                     )

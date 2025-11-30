@@ -44,6 +44,14 @@ class Chunk:
     # For deduplication
     text_hash: str = ""
     
+    # Original passage/doc ID for exact matching (research standard)
+    original_passage_id: Optional[str] = None  # MS MARCO passage ID or HotpotQA context ID
+    original_doc_id: Optional[str] = None  # Document-level ID if different from passage
+    
+    # HotpotQA-specific fields (title-based identifiers)
+    original_title: Optional[str] = None  # Wikipedia article title (HotpotQA) - case-insensitive
+    original_sent_id: Optional[int] = None  # Sentence index within article (HotpotQA) - 0-based
+    
     def __post_init__(self):
         if not self.text_hash:
             self.text_hash = hashlib.md5(self.text.encode()).hexdigest()[:16]
@@ -62,6 +70,10 @@ class Chunk:
             "child_ids": self.child_ids,
             "level": self.level,
             "text_hash": self.text_hash,
+            "original_passage_id": self.original_passage_id,
+            "original_doc_id": self.original_doc_id,
+            "original_title": self.original_title,
+            "original_sent_id": self.original_sent_id,
         }
 
 
@@ -435,6 +447,10 @@ class MultiGranularChunker:
         text: str,
         source_file: str = "",
         heading_path: List[str] = None,
+        original_passage_id: Optional[str] = None,
+        original_doc_id: Optional[str] = None,
+        original_title: Optional[str] = None,
+        original_sent_id: Optional[int] = None,
     ) -> Dict[str, List[Chunk]]:
         """
         Chunk a document for both OLTP and OLAP pipelines.
@@ -443,6 +459,10 @@ class MultiGranularChunker:
             text: Document text
             source_file: Source filename
             heading_path: Optional heading context
+            original_passage_id: Original passage/doc ID from dataset (for exact matching)
+            original_doc_id: Document-level ID if different from passage
+            original_title: Wikipedia article title (HotpotQA) - case-insensitive
+            original_sent_id: Sentence index within article (HotpotQA) - 0-based
             
         Returns:
             Dict with keys: "oltp", "olap_parents", "olap_children"
@@ -455,6 +475,28 @@ class MultiGranularChunker:
         
         # Generate OLAP chunks
         olap_parents, olap_children = self.olap_chunker.chunk(text, source_file, heading_path)
+        
+        # Preserve original IDs in all chunks (for exact matching in evaluation)
+        passage_id = original_passage_id or source_file
+        doc_id = original_doc_id or passage_id
+        
+        for chunk in oltp_chunks:
+            chunk.original_passage_id = passage_id
+            chunk.original_doc_id = doc_id
+            # Preserve HotpotQA-specific fields
+            if original_title is not None:
+                chunk.original_title = original_title
+            if original_sent_id is not None:
+                chunk.original_sent_id = original_sent_id
+        
+        for chunk in olap_parents + olap_children:
+            chunk.original_passage_id = passage_id
+            chunk.original_doc_id = doc_id
+            # Preserve HotpotQA-specific fields
+            if original_title is not None:
+                chunk.original_title = original_title
+            if original_sent_id is not None:
+                chunk.original_sent_id = original_sent_id
         
         return {
             "oltp": oltp_chunks,
@@ -471,9 +513,12 @@ class MultiGranularChunker:
         """
         Chunk a list of passages (e.g., from MS MARCO or HotpotQA).
         
+        Preserves original passage IDs and HotpotQA-specific fields (title, sent_id) 
+        for exact matching in evaluation (research standard).
+        
         Args:
             passages: List of passage dicts
-            id_field: Key for passage ID
+            id_field: Key for passage ID (will be stored as original_passage_id)
             text_field: Key for passage text
             
         Returns:
@@ -486,11 +531,23 @@ class MultiGranularChunker:
         for passage in passages:
             source = str(passage.get(id_field, "unknown"))
             text = passage.get(text_field, "")
+            original_passage_id = str(passage.get(id_field, source))  # Preserve original ID
+            
+            # Extract HotpotQA-specific fields (if available)
+            original_title = passage.get("title")  # Wikipedia article title (HotpotQA)
+            original_sent_id = passage.get("sent_id")  # Sentence index (HotpotQA)
             
             if not text:
                 continue
             
-            result = self.chunk_document(text, source_file=source)
+            result = self.chunk_document(
+                text, 
+                source_file=source,
+                original_passage_id=original_passage_id,
+                original_doc_id=original_passage_id,  # Same for now, can differentiate later
+                original_title=original_title,  # HotpotQA: Wikipedia article title
+                original_sent_id=original_sent_id,  # HotpotQA: sentence index (if chunk corresponds to single sentence)
+            )
             all_oltp.extend(result["oltp"])
             all_olap_parents.extend(result["olap_parents"])
             all_olap_children.extend(result["olap_children"])
@@ -537,46 +594,6 @@ Our analysis used both quantitative and qualitative methods. Statistical analysi
 # Results
 
 The results show significant improvements across all metrics. We observed a 25% increase in accuracy compared to baseline methods. The following subsections detail specific findings.
-
-## Primary Findings
-
-Our primary finding is that the new approach outperforms existing methods by a substantial margin. This was consistent across different test conditions and datasets.
-
-## Secondary Findings
-
-Additional analysis revealed interesting patterns in user behavior. These secondary findings suggest opportunities for future research.
-
-# Conclusion
-
-In conclusion, this work demonstrates the effectiveness of our proposed approach. Future work should explore additional applications and edge cases.
-"""
-
-    print("=" * 60)
-    print("Multi-Granular Chunking Test")
-    print("=" * 60)
-    
-    chunker = create_chunker()
-    result = chunker.chunk_document(sample_text, source_file="sample_doc")
-    
-    print(f"\n📄 OLTP Chunks: {len(result['oltp'])}")
-    for chunk in result['oltp'][:2]:
-        print(f"  [{chunk.id}] {chunk.text[:80]}...")
-        print(f"    Section: {chunk.section}, Tokens: ~{len(chunk.text.split()) * 1.3:.0f}")
-    
-    print(f"\n📚 OLAP Parent Chunks: {len(result['olap_parents'])}")
-    for chunk in result['olap_parents'][:2]:
-        print(f"  [{chunk.id}] Section: {chunk.section}")
-        print(f"    Children: {len(chunk.child_ids)}, Level: {chunk.level}")
-        print(f"    Text: {chunk.text[:60]}...")
-    
-    print(f"\n📑 OLAP Child Chunks: {len(result['olap_children'])}")
-    for chunk in result['olap_children'][:2]:
-        print(f"  [{chunk.id}] Parent: {chunk.parent_id}")
-        print(f"    Section: {chunk.section}")
-        print(f"    Text: {chunk.text[:60]}...")
-    
-    print("\n✅ Chunking test complete!")
-
 
 ## Primary Findings
 

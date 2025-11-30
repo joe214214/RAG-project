@@ -1,0 +1,155 @@
+{
+  "stats": [
+    {
+      "dataset": "msmarco",
+      "workers": 1,
+      "max_docs": 10000,
+      "use_gpu": true,
+      "batch_size": 32,
+      "total_chunks": 14240,
+      "oltp_chunks": 4240,
+      "olap_chunks": 10000,
+      "timings": {
+        "total": 23.837469339370728,
+        "load": 0.02855849266052246,
+        "chunk": 0.17185592651367188,
+        "embed": 15.817187547683716,
+        "store": 7.819793224334717
+      },
+      "throughput": {
+        "chunks_per_sec": 597.3788491247584,
+        "docs_per_sec": 419.50761876738653,
+        "chunks_per_doc": 1.424
+      },
+      "per_worker_timings": [
+        {
+          "total_start": 1764393300.6505089,
+          "load_time": 0.02855849266052246,
+          "chunk_time": 0.17185592651367188,
+          "embed_time": 15.817187547683716,
+          "store_time": 7.819793224334717,
+          "total_time": 23.837469339370728
+        }
+      ]
+    },
+    {
+      "dataset": "msmarco",
+      "workers": 2,
+      "max_docs": 10000,
+      "use_gpu": true,
+      "batch_size": 32,
+      "total_chunks": 14240,
+      "oltp_chunks": 4240,
+      "olap_chunks": 10000,
+      "timings": {
+        "total": 26.615243911743164,
+        "load": 0.05248260498046875,
+        "chunk": 0.14725875854492188,
+        "embed": 19.6583890914917,
+        "store": 6.746443033218384
+      },
+      "throughput": {
+        "chunks_per_sec": 535.0317302077038,
+        "docs_per_sec": 375.7245296402414,
+        "chunks_per_doc": 1.424
+      },
+      "per_worker_timings": [
+        {
+          "total_start": 1764396072.84633,
+          "load_time": 0.035263776779174805,
+          "chunk_time": 0.08958554267883301,
+          "embed_time": 11.779315948486328,
+          "store_time": 5.810657739639282,
+          "total_time": 25.68024754524231
+        },
+        {
+          "total_start": 1764396072.8449576,
+          "load_time": 0.05248260498046875,
+          "chunk_time": 0.14725875854492188,
+          "embed_time": 19.6583890914917,
+          "store_time": 6.746443033218384,
+          "total_time": 26.615243911743164
+        }
+      ]
+    },
+    {
+      "dataset": "msmarco",
+      "workers": 4,
+      "max_docs": 10000,
+      "use_gpu": true,
+      "batch_size": 32,
+      "total_chunks": 14240,
+      "oltp_chunks": 4240,
+      "olap_chunks": 10000,
+      "timings": {
+        "total": 18.977550268173218,
+        "load": 0.0847327709197998,
+        "chunk": 0.07605838775634766,
+        "embed": 14.610413551330566,
+        "store": 4.1744561195373535
+      },
+      "throughput": {
+        "chunks_per_sec": 750.360283533621,
+        "docs_per_sec": 526.9384013578799,
+        "chunks_per_doc": 1.424
+      },
+      "per_worker_timings": [
+        {
+          "total_start": 1764396188.6637015,
+          "load_time": 0.029822349548339844,
+          "chunk_time": 0.04265284538269043,
+          "embed_time": 7.845423460006714,
+          "store_time": 3.7856907844543457,
+          "total_time": 18.58999466896057
+        },
+        {
+          "total_start": 1764396188.66276,
+          "load_time": 0.046067237854003906,
+          "chunk_time": 0.07605838775634766,
+          "embed_time": 14.610413551330566,
+          "store_time": 4.1744561195373535,
+          "total_time": 18.977550268173218
+        },
+        {
+          "total_start": 1764396188.667213,
+          "load_time": 0.08269309997558594,
+          "chunk_time": 0.04899454116821289,
+          "embed_time": 12.112581729888916,
+          "store_time": 3.852769613265991,
+          "total_time": 18.651292085647583
+        },
+        {
+          "total_start": 1764396188.6672435,
+          "load_time": 0.0847327709197998,
+          "chunk_time": 0.04919695854187012,
+          "embed_time": 12.1131591796875,
+          "store_time": 3.8216512203216553,
+          "total_time": 18.620170831680298
+        }
+      ]
+    }
+  ],
+  "analysis": {
+    "baseline": {
+      "workers": 1,
+      "time": 23.837469339370728,
+      "throughput": 597.3788491247584
+    },
+    "scaling": [
+      {
+        "workers": 2,
+        "time": 26.615243911743164,
+        "speedup": 0.8956321955348744,
+        "efficiency": 44.78160977674372,
+        "throughput": 535.0317302077038
+      },
+      {
+        "workers": 4,
+        "time": 18.977550268173218,
+        "speedup": 1.2560877986105488,
+        "efficiency": 31.402194965263718,
+        "throughput": 750.360283533621
+      }
+    ]
+  }
+}

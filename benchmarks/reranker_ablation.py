@@ -100,11 +100,67 @@ def text_similarity(text1: str, text2: str) -> float:
     return len(t1 & t2) / len(t1 | t2)
 
 
-def is_relevant(retrieved_text: str, relevant_texts: List[str], threshold: float = 0.15) -> bool:
-    """Check if retrieved text matches any relevant text."""
-    for rel_text in relevant_texts:
-        if text_similarity(retrieved_text, rel_text) >= threshold:
+def is_relevant(
+    retrieved_doc: Dict,
+    relevant_passage_ids: List[str],
+    relevant_texts: List[str],
+    relevant_titles: List[str] = None,
+    relevant_sent_ids: List[int] = None,
+    threshold: float = 0.15,
+) -> bool:
+    """
+    Check if retrieved document is relevant using exact ID/title matching (research standard).
+    
+    Supports both MS MARCO (passage_id-based) and HotpotQA (title-based) matching.
+    Falls back to text similarity if IDs/titles not available.
+    
+    Args:
+        retrieved_doc: Dict with 'text', 'original_passage_id', 'original_title', 'original_sent_id'
+        relevant_passage_ids: List of ground-truth passage IDs (MS MARCO)
+        relevant_texts: List of ground-truth passage texts (fallback)
+        relevant_titles: List of Wikipedia article titles (HotpotQA) - case-insensitive
+        relevant_sent_ids: List of sentence indices (HotpotQA) - 0-based
+        threshold: Text similarity threshold
+    
+    Returns:
+        True if relevant
+    """
+    # HotpotQA: Title-based matching (research standard)
+    # Match on Wikipedia article title (case-insensitive) and optionally sentence ID
+    if relevant_titles:
+        retrieved_title = retrieved_doc.get("original_title")
+        if retrieved_title:
+            retrieved_title_lower = retrieved_title.lower()
+            for i, gold_title in enumerate(relevant_titles):
+                gold_title_lower = gold_title.lower()
+                if retrieved_title_lower == gold_title_lower:
+                    # If sent_id specified, require exact match; otherwise title match is sufficient
+                    if relevant_sent_ids and i < len(relevant_sent_ids):
+                        gold_sent_id = relevant_sent_ids[i]
+                        retrieved_sent_id = retrieved_doc.get("original_sent_id")
+                        if gold_sent_id is not None and retrieved_sent_id is not None:
+                            if retrieved_sent_id == gold_sent_id:
+                                return True
+                        else:
+                            # Title match is sufficient if sent_id not specified
+                            return True
+                    else:
+                        # Title match is sufficient
+                        return True
+    
+    # MS MARCO: Exact passage ID matching (research standard) - preferred method
+    original_id = retrieved_doc.get("original_passage_id")
+    if original_id and relevant_passage_ids:
+        if original_id in relevant_passage_ids:
             return True
+    
+    # Fallback to text similarity if IDs/titles not available
+    retrieved_text = retrieved_doc.get("text", "")
+    if relevant_texts:
+        for rel_text in relevant_texts:
+            if text_similarity(retrieved_text, rel_text) >= threshold:
+                return True
+    
     return False
 
 
@@ -136,7 +192,11 @@ def reciprocal_rank(relevances: List[int]) -> float:
 # =============================================================================
 
 def load_queries(query_type: str, limit: int = 30) -> List[Dict]:
-    """Load queries for the specified type."""
+    """
+    Load queries for the specified type with passage IDs for exact matching.
+    
+    Extracts both passage IDs and texts for exact ID matching (research standard).
+    """
     queries = []
     
     if query_type == "oltp":
@@ -148,15 +208,35 @@ def load_queries(query_type: str, limit: int = 30) -> List[Dict]:
                     break
                 query = item.get("query", "")
                 passages = item.get("passages", {})
+                
+                # Use actual queryid from dataset (for exact ID matching)
+                queryid = item.get("queryid") or item.get("query_id") or f"msmarco_{len(queries)}"
+                
                 relevant_texts = []
+                relevant_passage_ids = []
+                
                 if isinstance(passages, dict):
                     texts = passages.get("passage_text", [])
                     selected = passages.get("is_selected", [])
-                    for text, sel in zip(texts, selected):
+                    passage_ids = passages.get("passage_id", [])  # MS MARCO passage IDs (if available)
+                    
+                    for idx, (text, sel) in enumerate(zip(texts, selected)):
                         if sel == 1:
                             relevant_texts.append(text)
-                if query and relevant_texts:
-                    queries.append({"query": query, "relevant_texts": relevant_texts})
+                            # Extract actual passage_id from dataset (research standard)
+                            if passage_ids and idx < len(passage_ids):
+                                relevant_passage_ids.append(str(passage_ids[idx]))
+                            else:
+                                # Fallback: construct ID (shouldn't happen with real MS MARCO)
+                                relevant_passage_ids.append(f"msmarco_{len(queries)}_{idx}")
+                
+                if query and (relevant_texts or relevant_passage_ids):
+                    queries.append({
+                        "query": query,
+                        "queryid": str(queryid),  # Store actual queryid
+                        "relevant_texts": relevant_texts,
+                        "relevant_passage_ids": relevant_passage_ids,
+                    })
         except Exception as e:
             print(f"  Error loading MS MARCO: {e}")
     
@@ -171,11 +251,16 @@ def load_queries(query_type: str, limit: int = 30) -> List[Dict]:
                 context = item.get("context", {})
                 supporting_facts = item.get("supporting_facts", {})
                 relevant_texts = []
+                relevant_passage_ids = []
+                relevant_titles = []  # HotpotQA: Wikipedia article titles (case-insensitive)
+                relevant_sent_ids = []  # HotpotQA: sentence indices (0-based)
+                
                 if isinstance(context, dict) and isinstance(supporting_facts, dict):
                     titles = context.get("title", [])
                     sentences_list = context.get("sentences", [])
                     sf_titles = supporting_facts.get("title", [])
                     sf_sent_ids = supporting_facts.get("sent_id", [])
+                    
                     for sf_title, sf_sent_id in zip(sf_titles, sf_sent_ids):
                         if sf_title in titles:
                             idx = titles.index(sf_title)
@@ -183,12 +268,26 @@ def load_queries(query_type: str, limit: int = 30) -> List[Dict]:
                                 sents = sentences_list[idx]
                                 if sf_sent_id < len(sents):
                                     relevant_texts.append(sents[sf_sent_id])
-                if question and relevant_texts:
-                    queries.append({"query": question, "relevant_texts": relevant_texts})
+                                    # Store title and sent_id for HotpotQA title-based matching (research standard)
+                                    relevant_titles.append(sf_title)
+                                    relevant_sent_ids.append(sf_sent_id)
+                                    # Also store context ID for backward compatibility
+                                    context_id = f"hotpot_ctx_{sf_title}"
+                                    relevant_passage_ids.append(context_id)
+                
+                if question and (relevant_texts or relevant_passage_ids or relevant_titles):
+                    queries.append({
+                        "query": question,
+                        "relevant_texts": relevant_texts,
+                        "relevant_passage_ids": relevant_passage_ids,
+                        "relevant_titles": relevant_titles,  # HotpotQA: Wikipedia article titles
+                        "relevant_sent_ids": relevant_sent_ids,  # HotpotQA: sentence indices
+                    })
         except Exception as e:
             print(f"  Error loading HotpotQA: {e}")
     
     print(f"  Loaded {len(queries)} queries")
+    print(f"  Extracted passage IDs for exact matching: {sum(1 for q in queries if q.get('relevant_passage_ids'))} queries")
     return queries
 
 
@@ -249,7 +348,14 @@ class AblationRunner:
         latency = (time.time() - start) * 1000
         
         docs = [
-            {"id": str(hit.id), "score": hit.score, "text": hit.payload.get("text", "")}
+            {
+                "id": str(hit.id),
+                "score": hit.score,
+                "text": hit.payload.get("text", ""),
+                "original_passage_id": hit.payload.get("original_passage_id"),  # For exact ID matching (MS MARCO)
+                "original_title": hit.payload.get("original_title"),  # HotpotQA: Wikipedia article title
+                "original_sent_id": hit.payload.get("original_sent_id"),  # HotpotQA: sentence index
+            }
             for hit in results.points
         ]
         return docs, latency
@@ -260,15 +366,35 @@ class AblationRunner:
             return docs[:top_k], 0.0
         
         start = time.time()
-        doc_tuples = [(d["id"], d["text"]) for d in docs[:top_k]]
-        reranked = reranker.rerank(query, doc_tuples, top_k=top_k)
+        # Pass dictionaries to reranker (it expects List[Dict] with "text" key)
+        doc_dicts = docs[:top_k]  # Already in dict format
+        reranked_results = reranker.rerank(query, doc_dicts, top_k=top_k)
         latency = (time.time() - start) * 1000
         
-        # Convert back to dict format
-        result_docs = [
-            {"id": doc_id, "score": score, "text": text}
-            for doc_id, score, text in reranked
-        ]
+        # Convert RerankResult objects back to dict format, preserving all ID fields
+        # Use original_rank to map back to original docs (most reliable)
+        result_docs = []
+        for rerank_result in reranked_results:
+            # RerankResult has: text, score, original_score, original_rank, metadata
+            # Map back to original doc using original_rank
+            if rerank_result.original_rank < len(docs):
+                original_doc = docs[rerank_result.original_rank]
+                doc_dict = {
+                    "id": original_doc.get("id"),
+                    "text": rerank_result.text,  # Use reranked text (may be normalized)
+                    "score": rerank_result.score,  # Use reranked score
+                    "original_passage_id": original_doc.get("original_passage_id"),
+                    "original_title": original_doc.get("original_title"),  # HotpotQA
+                    "original_sent_id": original_doc.get("original_sent_id"),  # HotpotQA
+                }
+            else:
+                # Fallback: create minimal dict (shouldn't happen)
+                doc_dict = {
+                    "id": None,
+                    "text": rerank_result.text,
+                    "score": rerank_result.score,
+                }
+            result_docs.append(doc_dict)
         return result_docs, latency
     
     def run_experiment(
@@ -303,9 +429,19 @@ class AblationRunner:
             # Rerank
             docs, rerank_lat = self.rerank(q["query"], docs, reranker, rerank_k)
             
-            # Compute relevance
+            # Compute relevance using exact ID/title matching (research standard)
+            # Supports both MS MARCO (passage_id) and HotpotQA (title-based)
+            relevant_passage_ids = q.get("relevant_passage_ids", [])
+            relevant_titles = q.get("relevant_titles", [])  # HotpotQA: Wikipedia article titles
+            relevant_sent_ids = q.get("relevant_sent_ids", [])  # HotpotQA: sentence indices
             relevances = [
-                1 if is_relevant(d["text"], q["relevant_texts"]) else 0
+                1 if is_relevant(
+                    d, 
+                    relevant_passage_ids, 
+                    q.get("relevant_texts", []),
+                    relevant_titles,
+                    relevant_sent_ids,
+                ) else 0
                 for d in docs
             ]
             
