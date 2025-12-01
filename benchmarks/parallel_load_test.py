@@ -8,11 +8,24 @@ Tests the system under concurrent query load to measure:
 - System behavior under stress
 
 Usage:
+    # Load testing (dense-only, fast QPS):
     python benchmarks/parallel_load_test.py \
         --qdrant-host ecetesla0 \
         --num-queries 1000 \
         --concurrency-levels 1,5,10,20,50 \
         --output results/load_test.json
+    
+    # Quality evaluation (hybrid retrieval, slower but better recall):
+    python benchmarks/parallel_load_test.py \
+        --qdrant-host ecetesla0 \
+        --use-hybrid \
+        --num-queries 100 \
+        --concurrency-levels 1,5,10 \
+        --output results/load_test_hybrid.json
+
+Performance Trade-offs:
+- Dense-only (default): ~80 QPS, ~17ms latency, good for load testing
+- Hybrid (--use-hybrid): ~7 QPS, ~200ms latency, better recall for quality evaluation
 """
 
 import argparse
@@ -274,7 +287,8 @@ def main():
     )
     parser.add_argument("--classifier-type", type=str, default="transformer", choices=["feature", "transformer"], help="Classifier type")
     parser.add_argument("--classifier-model", type=str, default="classifier2/microsoft_MiniLM-L12-H384-uncased", help="Classifier model path (for transformer)")
-    parser.add_argument("--use-hybrid", action="store_true", help="Use hybrid retrieval")
+    parser.add_argument("--use-hybrid", action="store_true", 
+                       help="Use hybrid retrieval (BM25 + dense). WARNING: ~10x slower (~7 QPS vs ~80 QPS). Use for quality evaluation, not load testing.")
     parser.add_argument("--use-reranker", action="store_true", help="Use reranker")
     parser.add_argument("--reranker-model", type=str, default=None, help="Reranker model (e.g., 'tinybert', 'minilm')")
     parser.add_argument("--output", type=str, default="results/parallel_load_test.json", help="Output JSON file")
@@ -297,6 +311,11 @@ def main():
     if args.classifier_model:
         print(f"  Classifier model: {args.classifier_model}")
     print(f"  Hybrid: {args.use_hybrid}")
+    if args.use_hybrid:
+        print(f"    ⚠️  Hybrid mode enabled - expect ~7 QPS (vs ~80 QPS dense-only)")
+        print(f"    → Use for quality evaluation, not load testing")
+    else:
+        print(f"    ✓ Dense-only mode (default) - optimized for load testing")
     print(f"  Reranker: {args.use_reranker}")
     if args.reranker_model:
         print(f"  Reranker model: {args.reranker_model}")
@@ -307,6 +326,7 @@ def main():
         qdrant_host=args.qdrant_host,
         qdrant_port=args.qdrant_port,
         use_hybrid=args.use_hybrid,
+        use_query_expansion=False,  # Disable query expansion for load testing (saves ~20-50ms per query)
         device=args.device,
     )
     

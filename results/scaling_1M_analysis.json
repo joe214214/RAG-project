@@ -1,0 +1,414 @@
+{
+  "stats": [
+    {
+      "dataset": "msmarco",
+      "workers": 1,
+      "max_docs": 10000,
+      "use_gpu": true,
+      "batch_size": 32,
+      "total_chunks": 14240,
+      "oltp_chunks": 4240,
+      "olap_chunks": 10000,
+      "timings": {
+        "total": 23.837469339370728,
+        "load": 0.02855849266052246,
+        "chunk": 0.17185592651367188,
+        "embed": 15.817187547683716,
+        "store": 7.819793224334717
+      },
+      "throughput": {
+        "chunks_per_sec": 597.3788491247584,
+        "docs_per_sec": 419.50761876738653,
+        "chunks_per_doc": 1.424
+      },
+      "per_worker_timings": [
+        {
+          "total_start": 1764393300.6505089,
+          "load_time": 0.02855849266052246,
+          "chunk_time": 0.17185592651367188,
+          "embed_time": 15.817187547683716,
+          "store_time": 7.819793224334717,
+          "total_time": 23.837469339370728
+        }
+      ]
+    },
+    {
+      "dataset": "msmarco",
+      "workers": 1,
+      "max_docs": 700000,
+      "use_gpu": true,
+      "batch_size": 32,
+      "total_chunks": 813178,
+      "oltp_chunks": 113175,
+      "olap_chunks": 700003,
+      "timings": {
+        "total": 786.5336058139801,
+        "load": 1.785083293914795,
+        "chunk": 10.903403997421265,
+        "embed": 387.7490608692169,
+        "store": 386.095960855484
+      },
+      "throughput": {
+        "chunks_per_sec": 1033.8757225235731,
+        "docs_per_sec": 889.9810444533684,
+        "chunks_per_doc": 1.1616828571428572
+      },
+      "per_worker_timings": [
+        {
+          "total_start": 1764471042.0705078,
+          "load_time": 1.785083293914795,
+          "chunk_time": 10.903403997421265,
+          "embed_time": 387.7490608692169,
+          "store_time": 386.095960855484,
+          "total_time": 786.5336058139801
+        }
+      ]
+    },
+    {
+      "dataset": "hotpotqa",
+      "workers": 2,
+      "max_docs": 50000,
+      "use_gpu": true,
+      "batch_size": 32,
+      "total_chunks": 76027,
+      "oltp_chunks": 25246,
+      "olap_chunks": 50781,
+      "timings": {
+        "total": 104.81795978546143,
+        "load": 4.919698476791382,
+        "chunk": 0.9294776916503906,
+        "embed": 72.09480929374695,
+        "store": 26.86313533782959
+      },
+      "throughput": {
+        "chunks_per_sec": 725.3241730292215,
+        "docs_per_sec": 477.0174892006928,
+        "chunks_per_doc": 1.52054
+      },
+      "per_worker_timings": [
+        {
+          "total_start": 1764476262.8400683,
+          "load_time": 3.5100479125976562,
+          "chunk_time": 0.5703880786895752,
+          "embed_time": 33.20917892456055,
+          "store_time": 22.497755765914917,
+          "total_time": 100.45656418800354
+        },
+        {
+          "total_start": 1764476262.8446946,
+          "load_time": 4.919698476791382,
+          "chunk_time": 0.9294776916503906,
+          "embed_time": 72.09480929374695,
+          "store_time": 26.86313533782959,
+          "total_time": 104.81795978546143
+        }
+      ]
+    },
+    {
+      "dataset": "msmarco",
+      "workers": 2,
+      "max_docs": 10000,
+      "use_gpu": true,
+      "batch_size": 32,
+      "total_chunks": 14240,
+      "oltp_chunks": 4240,
+      "olap_chunks": 10000,
+      "timings": {
+        "total": 26.615243911743164,
+        "load": 0.05248260498046875,
+        "chunk": 0.14725875854492188,
+        "embed": 19.6583890914917,
+        "store": 6.746443033218384
+      },
+      "throughput": {
+        "chunks_per_sec": 535.0317302077038,
+        "docs_per_sec": 375.7245296402414,
+        "chunks_per_doc": 1.424
+      },
+      "per_worker_timings": [
+        {
+          "total_start": 1764396072.84633,
+          "load_time": 0.035263776779174805,
+          "chunk_time": 0.08958554267883301,
+          "embed_time": 11.779315948486328,
+          "store_time": 5.810657739639282,
+          "total_time": 25.68024754524231
+        },
+        {
+          "total_start": 1764396072.8449576,
+          "load_time": 0.05248260498046875,
+          "chunk_time": 0.14725875854492188,
+          "embed_time": 19.6583890914917,
+          "store_time": 6.746443033218384,
+          "total_time": 26.615243911743164
+        }
+      ]
+    },
+    {
+      "dataset": "msmarco",
+      "workers": 2,
+      "max_docs": 700000,
+      "use_gpu": true,
+      "batch_size": 32,
+      "total_chunks": 813178,
+      "oltp_chunks": 113175,
+      "olap_chunks": 700003,
+      "timings": {
+        "total": 795.6155483722687,
+        "load": 4.581670045852661,
+        "chunk": 8.642999649047852,
+        "embed": 514.8362240791321,
+        "store": 267.5437710285187
+      },
+      "throughput": {
+        "chunks_per_sec": 1022.0740427504992,
+        "docs_per_sec": 879.8219208160446,
+        "chunks_per_doc": 1.1616828571428572
+      },
+      "per_worker_timings": [
+        {
+          "total_start": 1764473144.812209,
+          "load_time": 1.653531551361084,
+          "chunk_time": 5.226392030715942,
+          "embed_time": 217.05058979988098,
+          "store_time": 213.77292895317078,
+          "total_time": 741.8469684123993
+        },
+        {
+          "total_start": 1764473144.816998,
+          "load_time": 4.581670045852661,
+          "chunk_time": 8.642999649047852,
+          "embed_time": 514.8362240791321,
+          "store_time": 267.5437710285187,
+          "total_time": 795.6155483722687
+        }
+      ]
+    },
+    {
+      "dataset": "hotpotqa",
+      "workers": 4,
+      "max_docs": 50000,
+      "use_gpu": true,
+      "batch_size": 32,
+      "total_chunks": 76027,
+      "oltp_chunks": 25246,
+      "olap_chunks": 50781,
+      "timings": {
+        "total": 78.54370856285095,
+        "load": 25.250078201293945,
+        "chunk": 0.43213367462158203,
+        "embed": 37.72878980636597,
+        "store": 15.121761560440063
+      },
+      "throughput": {
+        "chunks_per_sec": 967.9578592747874,
+        "docs_per_sec": 636.5882247588274,
+        "chunks_per_doc": 1.52054
+      },
+      "per_worker_timings": [
+        {
+          "total_start": 1764396612.0622303,
+          "load_time": 24.802887439727783,
+          "chunk_time": 0.3005964756011963,
+          "embed_time": 16.7210373878479,
+          "store_time": 13.876423358917236,
+          "total_time": 77.30320334434509
+        },
+        {
+          "total_start": 1764396612.064794,
+          "load_time": 25.250078201293945,
+          "chunk_time": 0.43213367462158203,
+          "embed_time": 37.72878980636597,
+          "store_time": 15.121761560440063,
+          "total_time": 78.54370856285095
+        },
+        {
+          "total_start": 1764396612.0593607,
+          "load_time": 25.135253190994263,
+          "chunk_time": 0.3005399703979492,
+          "embed_time": 25.645734786987305,
+          "store_time": 14.399286985397339,
+          "total_time": 77.82607650756836
+        },
+        {
+          "total_start": 1764396612.0594196,
+          "load_time": 25.045982360839844,
+          "chunk_time": 0.29886603355407715,
+          "embed_time": 25.633458375930786,
+          "store_time": 14.265969514846802,
+          "total_time": 77.69272875785828
+        }
+      ]
+    },
+    {
+      "dataset": "msmarco",
+      "workers": 4,
+      "max_docs": 100000,
+      "use_gpu": true,
+      "batch_size": 32,
+      "total_chunks": 142830,
+      "oltp_chunks": 42830,
+      "olap_chunks": 100000,
+      "timings": {
+        "total": 95.73982048034668,
+        "load": 10.699930429458618,
+        "chunk": 0.6893079280853271,
+        "embed": 58.36555814743042,
+        "store": 25.973960399627686
+      },
+      "throughput": {
+        "chunks_per_sec": 1491.8557323733432,
+        "docs_per_sec": 1044.4974671801044,
+        "chunks_per_doc": 1.4283
+      },
+      "per_worker_timings": [
+        {
+          "total_start": 1764396450.628392,
+          "load_time": 6.194312572479248,
+          "chunk_time": 0.45470118522644043,
+          "embed_time": 23.781845092773438,
+          "store_time": 22.440171241760254,
+          "total_time": 92.20661497116089
+        },
+        {
+          "total_start": 1764396450.626705,
+          "load_time": 8.638643741607666,
+          "chunk_time": 0.6893079280853271,
+          "embed_time": 58.36555814743042,
+          "store_time": 25.973960399627686,
+          "total_time": 95.73982048034668
+        },
+        {
+          "total_start": 1764396450.6258364,
+          "load_time": 10.699930429458618,
+          "chunk_time": 0.46247196197509766,
+          "embed_time": 38.37280511856079,
+          "store_time": 23.52382230758667,
+          "total_time": 93.2903642654419
+        },
+        {
+          "total_start": 1764396450.6258662,
+          "load_time": 8.280242204666138,
+          "chunk_time": 0.4692988395690918,
+          "embed_time": 38.37760853767395,
+          "store_time": 23.49821376800537,
+          "total_time": 93.26465153694153
+        }
+      ]
+    },
+    {
+      "dataset": "msmarco",
+      "workers": 4,
+      "max_docs": 10000,
+      "use_gpu": true,
+      "batch_size": 32,
+      "total_chunks": 14240,
+      "oltp_chunks": 4240,
+      "olap_chunks": 10000,
+      "timings": {
+        "total": 18.977550268173218,
+        "load": 0.0847327709197998,
+        "chunk": 0.07605838775634766,
+        "embed": 14.610413551330566,
+        "store": 4.1744561195373535
+      },
+      "throughput": {
+        "chunks_per_sec": 750.360283533621,
+        "docs_per_sec": 526.9384013578799,
+        "chunks_per_doc": 1.424
+      },
+      "per_worker_timings": [
+        {
+          "total_start": 1764396188.6637015,
+          "load_time": 0.029822349548339844,
+          "chunk_time": 0.04265284538269043,
+          "embed_time": 7.845423460006714,
+          "store_time": 3.7856907844543457,
+          "total_time": 18.58999466896057
+        },
+        {
+          "total_start": 1764396188.66276,
+          "load_time": 0.046067237854003906,
+          "chunk_time": 0.07605838775634766,
+          "embed_time": 14.610413551330566,
+          "store_time": 4.1744561195373535,
+          "total_time": 18.977550268173218
+        },
+        {
+          "total_start": 1764396188.667213,
+          "load_time": 0.08269309997558594,
+          "chunk_time": 0.04899454116821289,
+          "embed_time": 12.112581729888916,
+          "store_time": 3.852769613265991,
+          "total_time": 18.651292085647583
+        },
+        {
+          "total_start": 1764396188.6672435,
+          "load_time": 0.0847327709197998,
+          "chunk_time": 0.04919695854187012,
+          "embed_time": 12.1131591796875,
+          "store_time": 3.8216512203216553,
+          "total_time": 18.620170831680298
+        }
+      ]
+    }
+  ],
+  "analysis": {
+    "baseline": {
+      "workers": 1,
+      "time": 23.837469339370728,
+      "throughput": 597.3788491247584
+    },
+    "scaling": [
+      {
+        "workers": 1,
+        "time": 786.5336058139801,
+        "speedup": 0.03030699408539758,
+        "efficiency": 3.0306994085397583,
+        "throughput": 1033.8757225235731
+      },
+      {
+        "workers": 2,
+        "time": 104.81795978546143,
+        "speedup": 0.22741779546330246,
+        "efficiency": 11.370889773165123,
+        "throughput": 725.3241730292215
+      },
+      {
+        "workers": 2,
+        "time": 26.615243911743164,
+        "speedup": 0.8956321955348744,
+        "efficiency": 44.78160977674372,
+        "throughput": 535.0317302077038
+      },
+      {
+        "workers": 2,
+        "time": 795.6155483722687,
+        "speedup": 0.02996104008794103,
+        "efficiency": 1.4980520043970516,
+        "throughput": 1022.0740427504992
+      },
+      {
+        "workers": 4,
+        "time": 78.54370856285095,
+        "speedup": 0.3034930457898598,
+        "efficiency": 7.587326144746495,
+        "throughput": 967.9578592747874
+      },
+      {
+        "workers": 4,
+        "time": 95.73982048034668,
+        "speedup": 0.24898176348956122,
+        "efficiency": 6.22454408723903,
+        "throughput": 1491.8557323733432
+      },
+      {
+        "workers": 4,
+        "time": 18.977550268173218,
+        "speedup": 1.2560877986105488,
+        "efficiency": 31.402194965263718,
+        "throughput": 750.360283533621
+      }
+    ]
+  }
+}

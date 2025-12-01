@@ -1,0 +1,56 @@
+{
+  "dataset": "hotpotqa",
+  "workers": 4,
+  "max_docs": 50000,
+  "use_gpu": true,
+  "batch_size": 32,
+  "total_chunks": 76027,
+  "oltp_chunks": 25246,
+  "olap_chunks": 50781,
+  "timings": {
+    "total": 78.54370856285095,
+    "load": 25.250078201293945,
+    "chunk": 0.43213367462158203,
+    "embed": 37.72878980636597,
+    "store": 15.121761560440063
+  },
+  "throughput": {
+    "chunks_per_sec": 967.9578592747874,
+    "docs_per_sec": 636.5882247588274,
+    "chunks_per_doc": 1.52054
+  },
+  "per_worker_timings": [
+    {
+      "total_start": 1764396612.0622303,
+      "load_time": 24.802887439727783,
+      "chunk_time": 0.3005964756011963,
+      "embed_time": 16.7210373878479,
+      "store_time": 13.876423358917236,
+      "total_time": 77.30320334434509
+    },
+    {
+      "total_start": 1764396612.064794,
+      "load_time": 25.250078201293945,
+      "chunk_time": 0.43213367462158203,
+      "embed_time": 37.72878980636597,
+      "store_time": 15.121761560440063,
+      "total_time": 78.54370856285095
+    },
+    {
+      "total_start": 1764396612.0593607,
+      "load_time": 25.135253190994263,
+      "chunk_time": 0.3005399703979492,
+      "embed_time": 25.645734786987305,
+      "store_time": 14.399286985397339,
+      "total_time": 77.82607650756836
+    },
+    {
+      "total_start": 1764396612.0594196,
+      "load_time": 25.045982360839844,
+      "chunk_time": 0.29886603355407715,
+      "embed_time": 25.633458375930786,
+      "store_time": 14.265969514846802,
+      "total_time": 77.69272875785828
+    }
+  ]
+}

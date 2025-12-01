@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Dict, List, Sequence, Tuple
+import numpy as np
 
 from rank_bm25 import BM25Okapi
 
@@ -42,6 +43,9 @@ class BM25Retriever:
         """
         Retrieve top-k documents matching the query.
         
+        Optimized to use numpy argpartition for efficient top-k selection
+        without fully sorting all scores (O(n + k log k) vs O(n log n)).
+        
         Args:
             query: Search query
             top_k: Number of results
@@ -49,10 +53,30 @@ class BM25Retriever:
         Returns:
             List of (doc_id, score) tuples sorted by relevance
         """
-        scores = self._bm25.get_scores(query.lower().split())
-        doc_scores = list(zip((doc.doc_id for doc in self.documents), scores))
-        doc_scores.sort(key=lambda item: item[1], reverse=True)
-        return doc_scores[:top_k]
+        query_tokens = query.lower().split()
+        
+        # Get scores for all documents (still O(n) but unavoidable for BM25)
+        scores = self._bm25.get_scores(query_tokens)
+        scores_array = np.array(scores)
+        
+        # Use argpartition to get top-k indices without full sort
+        # This is O(n) instead of O(n log n) for full sort
+        if len(scores_array) <= top_k:
+            # If we have fewer docs than top_k, just sort all
+            top_indices = np.argsort(scores_array)[::-1]
+        else:
+            # Get indices of top-k largest scores (negative for descending order)
+            top_indices = np.argpartition(-scores_array, top_k)[:top_k]
+            # Sort only the top-k indices by score (O(k log k))
+            top_indices = top_indices[np.argsort(-scores_array[top_indices])]
+        
+        # Map indices to (doc_id, score) tuples
+        results = [
+            (self.documents[idx].doc_id, float(scores_array[idx]))
+            for idx in top_indices
+        ]
+        
+        return results
 
     @classmethod
     def from_id_to_text(cls, id_to_text: Dict[str, str]) -> "BM25Retriever":

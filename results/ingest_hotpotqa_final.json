@@ -1,0 +1,40 @@
+{
+  "dataset": "hotpotqa",
+  "workers": 2,
+  "max_docs": 50000,
+  "use_gpu": true,
+  "batch_size": 32,
+  "total_chunks": 76027,
+  "oltp_chunks": 25246,
+  "olap_chunks": 50781,
+  "timings": {
+    "total": 104.81795978546143,
+    "load": 4.919698476791382,
+    "chunk": 0.9294776916503906,
+    "embed": 72.09480929374695,
+    "store": 26.86313533782959
+  },
+  "throughput": {
+    "chunks_per_sec": 725.3241730292215,
+    "docs_per_sec": 477.0174892006928,
+    "chunks_per_doc": 1.52054
+  },
+  "per_worker_timings": [
+    {
+      "total_start": 1764476262.8400683,
+      "load_time": 3.5100479125976562,
+      "chunk_time": 0.5703880786895752,
+      "embed_time": 33.20917892456055,
+      "store_time": 22.497755765914917,
+      "total_time": 100.45656418800354
+    },
+    {
+      "total_start": 1764476262.8446946,
+      "load_time": 4.919698476791382,
+      "chunk_time": 0.9294776916503906,
+      "embed_time": 72.09480929374695,
+      "store_time": 26.86313533782959,
+      "total_time": 104.81795978546143
+    }
+  ]
+}

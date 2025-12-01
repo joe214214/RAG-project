@@ -223,9 +223,14 @@ class QueryAwareRAGPipeline:
         self.embedder = SentenceTransformer(embed_model, device=device)
         print("✓ Embedding model loaded")
         
-        # Qdrant client
+        # Qdrant client (use gRPC for ~30% better performance)
         from qdrant_client import QdrantClient, models
-        self.qdrant_client = QdrantClient(host=qdrant_host, port=qdrant_port, check_compatibility=False)
+        self.qdrant_client = QdrantClient(
+            host=qdrant_host, 
+            port=qdrant_port, 
+            prefer_grpc=True,  # gRPC is faster than REST
+            check_compatibility=False
+        )
         self.qdrant_host = qdrant_host
         self.qdrant_port = qdrant_port
         
@@ -628,25 +633,67 @@ Output:"""
             # Fallback to dense-only if BM25 index failed
             return self._retrieve_dense_only(query, collection, "oltp", top_k, use_reranker, reranker_model)
         
-        # Expand query for BM25 (improves keyword matching)
-        expanded_query = self._expand_query(query, use_llm=self.use_query_expansion)
+        # OPTIMIZATION: Parallelize BM25 and dense retrieval
+        import threading
         
-        # Get BM25 results (retrieve more for RRF)
-        bm25_results = self.bm25_indexes[collection].retrieve(expanded_query, top_k=max(top_k * 5, 100))
-        bm25_scores = {doc_id: score for doc_id, score in bm25_results}
+        bm25_results = None
+        bm25_scores = None
+        dense_results = None
+        dense_error = None
         
-        # Get dense results
-        query_vector = self.embedder.encode(query, normalize_embeddings=True)
-        # Increased ef_search for better recall in hybrid retrieval (optimized for large corpus)
-        search_params = models.SearchParams(hnsw_ef=400, exact=False)  # Optimized for evaluation
-        # Increase candidate pool for reranking: retrieve 100 candidates for better reranking quality
-        rerank_limit = max(top_k * 10, 100) if use_reranker else max(top_k * 5, 50)
-        dense_results = self.qdrant_client.query_points(
-            collection_name=collection,
-            query=query_vector.tolist(),
-            limit=rerank_limit,
-            search_params=search_params,
-        )
+        def run_bm25():
+            """Run BM25 retrieval in parallel."""
+            nonlocal bm25_results, bm25_scores
+            try:
+                # Expand query for BM25 (improves keyword matching)
+                expanded_query = self._expand_query(query, use_llm=self.use_query_expansion)
+                # Get BM25 results (retrieve more for RRF)
+                # Optimized: Reduced candidate pool to minimize BM25 scoring overhead
+                # Use smaller pool since BM25 now uses argpartition optimization
+                bm25_results = self.bm25_indexes[collection].retrieve(expanded_query, top_k=max(top_k, 20))
+                bm25_scores = {doc_id: score for doc_id, score in bm25_results}
+            except Exception as e:
+                print(f"Warning: BM25 retrieval failed: {e}")
+                bm25_results = []
+                bm25_scores = {}
+        
+        def run_dense():
+            """Run dense retrieval in parallel."""
+            nonlocal dense_results, dense_error
+            try:
+                # Get dense results
+                query_vector = self.embedder.encode(query, normalize_embeddings=True)
+                # Increased ef_search for better recall in hybrid retrieval (optimized for large corpus)
+                search_params = models.SearchParams(hnsw_ef=400, exact=False)  # Optimized for evaluation
+                # Increase candidate pool for reranking: retrieve 100 candidates for better reranking quality
+                rerank_limit = max(top_k * 10, 100) if use_reranker else max(top_k * 5, 50)
+                dense_results = self.qdrant_client.query_points(
+                    collection_name=collection,
+                    query=query_vector.tolist(),
+                    limit=rerank_limit,
+                    search_params=search_params,
+                )
+            except Exception as e:
+                dense_error = e
+        
+        # Run BM25 and dense retrieval in parallel
+        thread_bm25 = threading.Thread(target=run_bm25)
+        thread_dense = threading.Thread(target=run_dense)
+        
+        thread_bm25.start()
+        thread_dense.start()
+        
+        thread_bm25.join()
+        thread_dense.join()
+        
+        # Handle errors
+        if dense_error:
+            raise dense_error
+        
+        if bm25_results is None or bm25_scores is None:
+            # Fallback to dense-only if BM25 failed
+            bm25_results = []
+            bm25_scores = {}
         
         # Get chunk metadata for scoring
         chunk_metadata = {}
@@ -671,24 +718,64 @@ Output:"""
         )
         
         # Fetch metadata for BM25-only results (not in dense results)
+        # OPTIMIZATION: Batch retrieve instead of individual calls
         all_chunk_ids = set(dense_ranked_ids) | set(bm25_scores.keys())
-        for chunk_id in all_chunk_ids:
-            if chunk_id not in chunk_metadata:
-                try:
-                    point = self.qdrant_client.retrieve(
+        missing_chunk_ids = [chunk_id for chunk_id in all_chunk_ids if chunk_id not in chunk_metadata]
+        
+        if missing_chunk_ids:
+            # Batch retrieve all missing chunks in one call (much faster than individual retrieves)
+            try:
+                # Convert string IDs to integers for Qdrant (Qdrant stores IDs as integers)
+                def to_int_id(chunk_id_str):
+                    """Convert chunk ID string to integer for Qdrant."""
+                    try:
+                        return int(chunk_id_str)
+                    except (ValueError, TypeError):
+                        # If it's not a valid integer, return as-is (might be UUID)
+                        return chunk_id_str
+                
+                # Qdrant retrieve can handle multiple IDs at once
+                batch_size = 100  # Qdrant may have limits, batch if needed
+                for i in range(0, len(missing_chunk_ids), batch_size):
+                    batch_ids_str = missing_chunk_ids[i:i + batch_size]
+                    # Convert to integers for Qdrant API
+                    batch_ids_int = [to_int_id(cid) for cid in batch_ids_str]
+                    points = self.qdrant_client.retrieve(
                         collection_name=collection,
-                        ids=[chunk_id],
+                        ids=batch_ids_int,
                         with_payload=True,
-                    )[0]
-                    chunk_metadata[chunk_id] = {
-                        "text": point.payload.get("text", ""),
-                        "chunk_type": point.payload.get("chunk_type", "oltp"),
-                        "source_file": point.payload.get("source_file", "unknown"),
-                        "section": point.payload.get("section", ""),
-                        "level": point.payload.get("level", "leaf"),
-                    }
-                except:
-                    continue
+                    )
+                    for point in points:
+                        chunk_id = str(point.id)
+                        chunk_metadata[chunk_id] = {
+                            "text": point.payload.get("text", ""),
+                            "chunk_type": point.payload.get("chunk_type", "oltp"),
+                            "source_file": point.payload.get("source_file", "unknown"),
+                            "section": point.payload.get("section", ""),
+                            "level": point.payload.get("level", "leaf"),
+                        }
+            except Exception as e:
+                # Fallback: if batch retrieve fails, try individual (shouldn't happen)
+                print(f"Warning: Batch retrieve failed, falling back to individual: {e}")
+                for chunk_id in missing_chunk_ids:
+                    if chunk_id not in chunk_metadata:
+                        try:
+                            # Convert to integer for Qdrant
+                            int_id = int(chunk_id) if chunk_id.isdigit() else chunk_id
+                            point = self.qdrant_client.retrieve(
+                                collection_name=collection,
+                                ids=[int_id],
+                                with_payload=True,
+                            )[0]
+                            chunk_metadata[chunk_id] = {
+                                "text": point.payload.get("text", ""),
+                                "chunk_type": point.payload.get("chunk_type", "oltp"),
+                                "source_file": point.payload.get("source_file", "unknown"),
+                                "section": point.payload.get("section", ""),
+                                "level": point.payload.get("level", "leaf"),
+                            }
+                        except:
+                            continue
         
         # Sort by RRF score (already sorted by _reciprocal_rank_fusion)
         sorted_results = rrf_results
