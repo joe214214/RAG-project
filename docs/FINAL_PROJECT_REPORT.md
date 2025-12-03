@@ -13,6 +13,7 @@
 2. [System Architecture](#2-system-architecture)
 3. [Scaling Experiments & Results](#3-scaling-experiments--results)
 4. [Evaluation Methodology & Results](#4-evaluation-methodology--results)
+   - [4.8 Cohere API Integration & Comparison](#48-cohere-api-integration--comparison)
 5. [Ablation Studies](#5-ablation-studies)
 6. [Cost Analysis](#6-cost-analysis)
 7. [Bottleneck Analysis & Optimization](#7-bottleneck-analysis--optimization)
@@ -62,9 +63,10 @@ Our query-aware RAG system consists of:
 1. **Query Classifier:** Routes queries to appropriate retrieval pipelines (OLTP vs OLAP)
 2. **Multi-granular Chunking:** Creates fine-grained (OLTP) and coarse-grained (OLAP) chunks
 3. **Hybrid Retrieval:** Combines BM25 sparse retrieval with dense vector search
-4. **Reranking:** Cross-encoder models improve result quality
+4. **Reranking:** Cross-encoder models (local) or Cohere API improve result quality
 5. **Distributed Ingestion:** MPI-based parallel processing for scalable data ingestion
 6. **Vector Database:** Qdrant with HNSW indexing for efficient similarity search
+7. **Embedding Options:** Local models (sentence-transformers) or Cohere API
 
 ### 1.4 Key Contributions
 
@@ -133,7 +135,8 @@ The system combines sparse (BM25) and dense vector retrieval:
 - **Fix:** Initially indexed only 10K chunks (1% of corpus) - fixed to include full corpus
 
 #### Dense Vector Search
-- **Model:** sentence-transformers/all-MiniLM-L6-v2 (384 dimensions)
+- **Local Model:** sentence-transformers/all-MiniLM-L6-v2 (384 dimensions)
+- **Cohere API:** embed-english-light-v3.0 (384 dimensions, optional)
 - **Index:** HNSW (Hierarchical Navigable Small World) graph
 - **Purpose:** Semantic similarity matching
 - **Parameters:** `ef_search=200` (OLTP), `ef_search=400` (OLAP) for evaluation
@@ -212,15 +215,22 @@ We conducted scaling experiments at two scales to understand dataset-size depend
 #### 1M Chunk Production Scale (~813K chunks)
 - **Purpose:** Demonstrate production-scale scalability
 - **Dataset:** 700,000 MS MARCO documents → 813,178 chunks
-- **Workers Tested:** 1, 2
+- **Workers Tested:** 1, 2, 4
 
-| Metric | 1 Worker | 2 Workers | Change |
-|--------|----------|-----------|--------|
-| **Total Time** | 786.5s (13.1 min) | 795.6s (13.3 min) | +1.2% |
-| **Throughput (chunks/sec)** | 1,033.9 | 1,022.1 | -1.1% |
-| **Success Rate** | 100% | 100% | - |
+![1M Chunk Ingestion Scaling](results/plots/scaling_1M_plot.png)
 
-**Key Finding:** Minimal improvement with 2 workers indicates **storage I/O bottleneck**, not embedding computation.
+| Metric | 1 Worker | 2 Workers | 4 Workers | Change (1→2) | Change (1→4) |
+|--------|----------|-----------|----------|--------------|--------------|
+| **Total Time** | 786.5s (13.1 min) | 795.6s (13.3 min) | **421.4s (7.0 min)** | +1.2% | **-46.4%** |
+| **Throughput (chunks/sec)** | 1,033.9 | 1,022.1 | **1,929.8** | -1.1% | **+86.7%** |
+| **Success Rate** | 100% | 100% | 100% | - | - |
+| **Speedup** | 1.00x | 0.99x | **1.87x** | - | - |
+| **Efficiency** | 100% | 49.5% | **46.7%** | - | - |
+
+**Key Findings:**
+- **2 Workers:** Minimal improvement (0.99x speedup) indicates **storage I/O bottleneck**
+- **4 Workers:** Significant improvement (**1.87x speedup**) demonstrates scaling benefits with more workers
+- **Efficiency:** 46.7% at 4 workers (similar to 2-worker efficiency, but absolute speedup is much better)
 
 #### Time Breakdown Analysis
 
@@ -236,15 +246,21 @@ We conducted scaling experiments at two scales to understand dataset-size depend
 - Embed: 514.84s (64.7%) - Worker 1 bottleneck
 - Store: 267.54s (33.6%)
 
+**4 Workers (Max):**
+- Load: 2.53s (0.6%)
+- Chunk: 4.25s (1.0%)
+- Embed: 271.23s (64.4%) - Worker 1 bottleneck
+- Store: 143.36s (34.0%)
+
 **Load Imbalance:**
-- Worker 0: 217.1s embedding time
-- Worker 1: 514.8s embedding time (2.4× slower)
-- **Efficiency:** 49.5% (vs ideal 100%)
+- **2 Workers:** Worker 0: 217.1s embedding, Worker 1: 514.8s embedding (2.4× slower)
+- **4 Workers:** Worker 0: 98.6s embedding, Worker 1: 271.2s embedding (2.75× slower)
+- **Efficiency:** 49.5% (2 workers) vs 46.7% (4 workers)
 
 **Root Causes:**
 1. **Uneven work distribution:** Round-robin assignment doesn't account for document size variation
 2. **GPU performance differences:** Different GPU models/loads on worker nodes
-3. **Storage contention:** Concurrent Qdrant writes saturate network/disk bandwidth
+3. **Storage contention:** Concurrent Qdrant writes saturate network/disk bandwidth (less limiting with 4 workers)
 
 ### 3.2 Load Testing: Concurrent Query Performance
 
@@ -286,21 +302,24 @@ We evaluated system performance under concurrent query load:
 ### 3.3 Scaling Analysis Summary
 
 **Scaling Achievements:**
-- ✅ **1M chunks ingested in ~13 minutes** (production-scale)
-- ✅ **~1,000 chunks/sec throughput** (consistent across workers)
+- ✅ **1M chunks ingested in ~7 minutes** with 4 workers (production-scale)
+- ✅ **~1,900 chunks/sec throughput** with 4 workers (1.87× improvement)
 - ✅ **100% success rate** (no data loss)
 - ✅ **Multi-scale analysis** (10K → 1M chunks demonstrates dataset-size dependency)
+- ✅ **1.87× speedup** with 4 workers (significant scaling improvement)
 
 **Scaling Limitations:**
-- ⚠️ **49.5% efficiency** (load imbalance reduces parallel efficiency)
-- ⚠️ **Storage bottleneck** (Qdrant I/O prevents optimal scaling)
+- ⚠️ **46.7% efficiency** at 4 workers (load imbalance reduces parallel efficiency)
+- ⚠️ **Storage bottleneck** (Qdrant I/O less limiting with 4 workers, but still present)
 - ⚠️ **Negative speedup** for small datasets (<50K chunks)
+- ⚠️ **Minimal improvement** at 2 workers (0.99× speedup)
 
 **Key Insights:**
 1. **Dataset-size dependency:** MPI scaling only beneficial for large datasets (>50K chunks)
-2. **Storage I/O bottleneck:** Limits scaling beyond 2 workers
-3. **Load imbalance:** Uneven work distribution reduces efficiency
-4. **Optimal concurrency:** 5-10 queries for query processing
+2. **Scaling threshold:** 4 workers show significant improvement (1.87×) vs minimal at 2 workers (0.99×)
+3. **Storage I/O bottleneck:** Less limiting with 4 workers (storage time reduced per worker)
+4. **Load imbalance:** Uneven work distribution reduces efficiency but doesn't prevent scaling
+5. **Optimal concurrency:** 5-10 queries for query processing
 
 ---
 
@@ -414,6 +433,60 @@ We discovered and fixed a critical bug in BM25 indexing:
 - **Issue:** Many ground truth passages not found in Qdrant
 - **Impact:** Evaluation metrics may be conservative (actual performance likely better)
 - **Future Work:** Re-ingestion with better ID alignment
+
+### 4.8 Cohere API Integration & Comparison
+
+We integrated Cohere's cloud API for embeddings and reranking to compare against local models:
+
+#### Cohere API Configuration
+- **Embedding Model:** `embed-english-light-v3.0` (384 dimensions, matches Qdrant)
+- **Reranker Model:** `rerank-english-v3.0`
+- **Evaluation:** ID-based matching (same methodology as local models)
+
+#### Comparison Results: Cohere API vs Local Models
+
+![Cohere vs Local Comparison](results/plots/best/cohere_vs_local_comparison.png)
+
+| Configuration | Metric | Local Models | Cohere API | Improvement |
+|---------------|--------|--------------|------------|-------------|
+| **transformer_dense** | MRR | 0.391 | **0.500** | **+28%** |
+| | Recall@10 | 0.285 | **0.574** | **+101%** |
+| | NDCG@10 | 0.402 | **0.519** | **+29%** |
+| | Latency | 53.3ms | 99.9ms | +87% |
+| **transformer_hybrid_rerank** | MRR | 0.454 | 0.482 | +6% |
+| | Recall@10 | 0.273 | **0.595** | **+118%** |
+| | NDCG@10 | 0.456 | **0.520** | **+14%** |
+| | Latency | 305.0ms | **184.7ms** | **-39%** |
+| **baseline_feature_dense** | MRR | 0.296 | **0.316** | +7% |
+| | Recall@10 | 0.273 | **0.378** | **+38%** |
+| | NDCG@10 | 0.316 | **0.345** | +9% |
+| | Latency | 30.3ms | 115.2ms | +280% |
+
+#### Key Findings
+
+**Quality Improvements:**
+- ✅ **Transformer configurations:** Cohere API achieves **+28-101% improvement** in Recall@10
+- ✅ **Best Recall@10:** 0.595 (Cohere) vs 0.273 (Local) for `transformer_hybrid_rerank` (+118%)
+- ✅ **MRR improvements:** +6-28% across transformer configurations
+- ✅ **NDCG improvements:** +14-29% for transformer configurations
+
+**Latency Trade-offs:**
+- ⚠️ **Baseline:** Cohere API is 3.8× slower (115ms vs 30ms)
+- ✅ **Best config:** Cohere API is **39% faster** (185ms vs 305ms) for `transformer_hybrid_rerank`
+- ✅ **Transformer dense:** Cohere API is 1.9× slower but achieves much better quality
+
+**Best Configuration with Cohere:**
+- **`transformer_hybrid_rerank`** with Cohere API:
+  - **MRR:** 0.482 (+6% vs local)
+  - **Recall@10:** 0.595 (+118% vs local)
+  - **NDCG@10:** 0.520 (+14% vs local)
+  - **Latency:** 184.7ms (**39% faster** than local)
+
+**Analysis:**
+- **Cohere API provides significant quality improvements** for transformer-based configurations
+- **Recall@10 improvements are dramatic** (+101-118%), indicating better retrieval coverage
+- **Latency trade-off:** Cohere API adds network overhead for baseline, but actually **reduces latency** for complex configurations (likely due to optimized reranking)
+- **Recommendation:** Use Cohere API for production deployments when quality is critical and API costs are acceptable
 
 ---
 
@@ -618,15 +691,17 @@ Both configurations show similar per-query costs (~$0.0002), indicating:
 ### 8.1 Key Achievements
 
 #### Scalability
-- ✅ **1M chunks ingested in ~13 minutes** using distributed processing
-- ✅ **~1,000 chunks/sec throughput** (consistent across workers)
+- ✅ **1M chunks ingested in ~7 minutes** with 4 workers (1.87× speedup)
+- ✅ **~1,900 chunks/sec throughput** with 4 workers (86.7% improvement)
 - ✅ **100% success rate** (no data loss)
 - ✅ **Multi-scale analysis** demonstrates dataset-size dependency
+- ✅ **Scaling improvement** with more workers (4 workers achieve 1.87× speedup)
 
 #### Performance
 - ✅ **82 QPS baseline** (dense-only retrieval)
-- ✅ **46ms best latency** (transformer + dense-only)
+- ✅ **46ms best latency** (transformer + dense-only, local models)
 - ✅ **99% Recall@10** with n-gram similarity evaluation
+- ✅ **59.5% Recall@10** with Cohere API (ID-based, +118% vs local)
 
 #### Cost Efficiency
 - ✅ **12.7% cost reduction** with optimized configuration
@@ -638,12 +713,14 @@ Both configurations show similar per-query costs (~$0.0002), indicating:
 - ✅ **Multiple metrics** (MRR, Recall@k, NDCG@10)
 - ✅ **Evaluation method evolution** (ID-based → text similarity)
 - ✅ **BM25 fix validated** (full corpus indexing)
+- ✅ **Cohere API comparison** (cloud vs local models)
 
 ### 8.2 Limitations
 
 #### Scalability Limitations
-- ⚠️ **Storage bottleneck:** Single-node Qdrant prevents optimal scaling
-- ⚠️ **Load imbalance:** 49.5% efficiency (vs ideal 100%)
+- ⚠️ **Storage bottleneck:** Single-node Qdrant prevents optimal scaling (less limiting with 4 workers)
+- ⚠️ **Load imbalance:** 46.7% efficiency at 4 workers (vs ideal 100%)
+- ⚠️ **Minimal improvement** at 2 workers (0.99× speedup)
 - ⚠️ **Negative speedup** for small datasets (<50K chunks)
 
 #### Evaluation Limitations

@@ -1,0 +1,56 @@
+{
+  "dataset": "msmarco",
+  "workers": 4,
+  "max_docs": 700000,
+  "use_gpu": true,
+  "batch_size": 32,
+  "total_chunks": 813178,
+  "oltp_chunks": 113175,
+  "olap_chunks": 700003,
+  "timings": {
+    "total": 421.38722944259644,
+    "load": 2.5321362018585205,
+    "chunk": 4.2472825050354,
+    "embed": 271.2294092178345,
+    "store": 143.36293029785156
+  },
+  "throughput": {
+    "chunks_per_sec": 1929.7642244062722,
+    "docs_per_sec": 1661.1799102833459,
+    "chunks_per_doc": 1.1616828571428572
+  },
+  "per_worker_timings": [
+    {
+      "total_start": 1764615458.719023,
+      "load_time": 1.6354024410247803,
+      "chunk_time": 2.467771053314209,
+      "embed_time": 98.59964942932129,
+      "store_time": 130.39698839187622,
+      "total_time": 408.4196653366089
+    },
+    {
+      "total_start": 1764615458.707086,
+      "load_time": 2.5321362018585205,
+      "chunk_time": 4.2472825050354,
+      "embed_time": 271.2294092178345,
+      "store_time": 143.36293029785156,
+      "total_time": 421.38722944259644
+    },
+    {
+      "total_start": 1764615458.7224786,
+      "load_time": 1.6414930820465088,
+      "chunk_time": 2.604607343673706,
+      "embed_time": 186.59873723983765,
+      "store_time": 134.63331532478333,
+      "total_time": 412.6533160209656
+    },
+    {
+      "total_start": 1764615458.7225788,
+      "load_time": 1.6679494380950928,
+      "chunk_time": 2.5440056324005127,
+      "embed_time": 186.7712962627411,
+      "store_time": 134.57482647895813,
+      "total_time": 412.5947527885437
+    }
+  ]
+}

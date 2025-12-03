@@ -1,0 +1,2268 @@
+{
+  "summary": {
+    "best_latency": {
+      "config": "transformer_dense",
+      "latency_ms": 46.25004529953003
+    },
+    "best_confidence": {
+      "config": "transformer_dense",
+      "confidence": 0.9908762574195862
+    }
+  },
+  "configs": [
+    {
+      "config": {
+        "name": "baseline_feature_dense",
+        "classifier_type": "feature",
+        "classifier_model": null,
+        "router_model": "models/feature_router.pkl",
+        "use_hybrid": false,
+        "use_reranker": false,
+        "oltp_reranker": null,
+        "olap_reranker": null,
+        "description": "Baseline: Feature classifier, dense-only retrieval, no reranking"
+      },
+      "queries": [
+        {
+          "query": "What is machine learning?",
+          "query_type": "oltp",
+          "confidence": 0.8418240475462142,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.54654205,
+            0.48734882,
+            0.43605536,
+            0.3930177,
+            0.38494658
+          ],
+          "latency_ms": 735.4192733764648,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "Who founded Microsoft?",
+          "query_type": "oltp",
+          "confidence": 0.5399530744977401,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.71543723,
+            0.5902909,
+            0.50763875,
+            0.5019685,
+            0.48712283
+          ],
+          "latency_ms": 17.641067504882812,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "What is the capital of France?",
+          "query_type": "oltp",
+          "confidence": 0.7790423072372175,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.58836424,
+            0.49958426,
+            0.47613382,
+            0.47030222,
+            0.46502745
+          ],
+          "latency_ms": 18.926143646240234,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "When was Python created?",
+          "query_type": "oltp",
+          "confidence": 0.8109650365918537,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.51779723,
+            0.4831094,
+            0.44101164,
+            0.42788517,
+            0.4261598
+          ],
+          "latency_ms": 18.43547821044922,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "What is the speed of light?",
+          "query_type": "oltp",
+          "confidence": 0.7885824310683367,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.5397071,
+            0.52284926,
+            0.5206257,
+            0.5126356,
+            0.47523162
+          ],
+          "latency_ms": 18.459081649780273,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "Who wrote Romeo and Juliet?",
+          "query_type": "oltp",
+          "confidence": 0.6093529743098565,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.62046957,
+            0.59129333,
+            0.56370676,
+            0.5637063,
+            0.5609181
+          ],
+          "latency_ms": 20.737409591674805,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "What is the largest planet?",
+          "query_type": "oltp",
+          "confidence": 0.8286759703899318,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.6348833,
+            0.6290332,
+            0.627208,
+            0.61288774,
+            0.6055083
+          ],
+          "latency_ms": 19.894123077392578,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "What is artificial intelligence?",
+          "query_type": "oltp",
+          "confidence": 0.7824163606884957,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.7642236,
+            0.6477161,
+            0.55243903,
+            0.49693906,
+            0.4714601
+          ],
+          "latency_ms": 20.19357681274414,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "Who invented the telephone?",
+          "query_type": "oltp",
+          "confidence": 0.5717893178117928,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.5639262,
+            0.46021962,
+            0.4420349,
+            0.44177204,
+            0.44002438
+          ],
+          "latency_ms": 19.239187240600586,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "What is the chemical formula for water?",
+          "query_type": "oltp",
+          "confidence": 0.7762098908592657,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.57092893,
+            0.5700033,
+            0.5587868,
+            0.55503774,
+            0.5058385
+          ],
+          "latency_ms": 20.430803298950195,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "Compare machine learning and deep learning",
+          "query_type": "olap",
+          "confidence": 0.660774232164496,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.730464,
+            0.678312,
+            0.5697456,
+            0.55698293,
+            0.530939
+          ],
+          "latency_ms": 22.078990936279297,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "What are the differences between AI and ML?",
+          "query_type": "olap",
+          "confidence": 0.7646512293944218,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.58390725,
+            0.55409247,
+            0.55212694,
+            0.5377992,
+            0.5234568
+          ],
+          "latency_ms": 20.51258087158203,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "Explain the relationship between neural networks and deep learning",
+          "query_type": "olap",
+          "confidence": 0.9911269573698648,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.7354613,
+            0.6928704,
+            0.67924154,
+            0.67092013,
+            0.62768346
+          ],
+          "latency_ms": 22.806167602539062,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "How do transformers differ from RNNs?",
+          "query_type": "oltp",
+          "confidence": 0.617286128845528,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.41519195,
+            0.38943863,
+            0.3689274,
+            0.36424422,
+            0.3604977
+          ],
+          "latency_ms": 22.686481475830078,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "What are the advantages and disadvantages of supervised learning?",
+          "query_type": "olap",
+          "confidence": 0.7455839595393952,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.51552033,
+            0.50773436,
+            0.49317038,
+            0.476867,
+            0.46534735
+          ],
+          "latency_ms": 21.3470458984375,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "Compare supervised and unsupervised learning approaches",
+          "query_type": "olap",
+          "confidence": 0.6367265039690843,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.42786244,
+            0.41091642,
+            0.3575323,
+            0.3553368,
+            0.35030857
+          ],
+          "latency_ms": 20.304441452026367,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "How does reinforcement learning relate to other ML paradigms?",
+          "query_type": "olap",
+          "confidence": 0.9651340847654649,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.4979443,
+            0.49184757,
+            0.478983,
+            0.4785776,
+            0.47488374
+          ],
+          "latency_ms": 23.865699768066406,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "What are the key differences between CNNs and RNNs?",
+          "query_type": "olap",
+          "confidence": 0.7720161273380328,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.5135985,
+            0.51094604,
+            0.51037943,
+            0.5051508,
+            0.49364248
+          ],
+          "latency_ms": 21.537303924560547,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "Explain the evolution of NLP from rule-based to transformer models",
+          "query_type": "olap",
+          "confidence": 0.9909717059332616,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.47884277,
+            0.45768598,
+            0.43474865,
+            0.43296924,
+            0.43164617
+          ],
+          "latency_ms": 24.211406707763672,
+          "config_name": "baseline_feature_dense"
+        },
+        {
+          "query": "Compare different optimization algorithms used in deep learning",
+          "query_type": "olap",
+          "confidence": 0.6985001608633092,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.52206624,
+            0.4716491,
+            0.46033943,
+            0.39550185,
+            0.3729824
+          ],
+          "latency_ms": 20.638227462768555,
+          "config_name": "baseline_feature_dense"
+        }
+      ],
+      "avg_latency_ms": 56.46822452545166,
+      "avg_confidence": 0.7585791250591781,
+      "routing_accuracy": {
+        "oltp": 11,
+        "olap": 9
+      },
+      "num_queries": 20
+    },
+    {
+      "config": {
+        "name": "feature_hybrid",
+        "classifier_type": "feature",
+        "classifier_model": null,
+        "router_model": "models/feature_router.pkl",
+        "use_hybrid": true,
+        "use_reranker": false,
+        "oltp_reranker": null,
+        "olap_reranker": null,
+        "description": "Feature classifier with hybrid retrieval (BM25 + dense)"
+      },
+      "queries": [
+        {
+          "query": "What is machine learning?",
+          "query_type": "oltp",
+          "confidence": 0.8418240475462142,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.7472035112965782,
+            0.7347641809719198,
+            0.7292344264291093,
+            0.6624116476626682,
+            0.6475369921671243
+          ],
+          "latency_ms": 6463.4108543396,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "Who founded Microsoft?",
+          "query_type": "oltp",
+          "confidence": 0.5399530744977401,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.21463116900000004,
+            0.17708727000000002,
+            0.15229162500000004,
+            0.15059055000000005,
+            0.146136849
+          ],
+          "latency_ms": 179.67629432678223,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "What is the capital of France?",
+          "query_type": "oltp",
+          "confidence": 0.7790423072372175,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.7653534953521521,
+            0.17650927200000002,
+            0.14987527800000003,
+            0.14284014600000003,
+            0.14109066600000003
+          ],
+          "latency_ms": 293.44773292541504,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "When was Python created?",
+          "query_type": "oltp",
+          "confidence": 0.8109650365918537,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.8250724779999999,
+            0.7334889080833701,
+            0.6405481609818279,
+            0.5942400019818278,
+            0.592804274395964
+          ],
+          "latency_ms": 204.60152626037598,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "What is the speed of light?",
+          "query_type": "oltp",
+          "confidence": 0.7885824310683367,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.7107479233989498,
+            0.6960606757774053,
+            0.6773320027961975,
+            0.6638760657410433,
+            0.6623087337171522
+          ],
+          "latency_ms": 284.09457206726074,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "Who wrote Romeo and Juliet?",
+          "query_type": "oltp",
+          "confidence": 0.6093529743098565,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.886140871,
+            0.7513615354792248,
+            0.6624806783058608,
+            0.6368665674960706,
+            0.6001426243750179
+          ],
+          "latency_ms": 256.0911178588867,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "What is the largest planet?",
+          "query_type": "oltp",
+          "confidence": 0.8286759703899318,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.8235472317439474,
+            0.7504234862054643,
+            0.7339571068397718,
+            0.19046499000000003,
+            0.18870996
+          ],
+          "latency_ms": 253.32140922546387,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "What is artificial intelligence?",
+          "query_type": "oltp",
+          "confidence": 0.7824163606884957,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.89431483,
+            0.6978217525483549,
+            0.22926708000000004,
+            0.16573170900000003,
+            0.14143803000000002
+          ],
+          "latency_ms": 233.6108684539795,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "Who invented the telephone?",
+          "query_type": "oltp",
+          "confidence": 0.5717893178117928,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.7099239899879356,
+            0.6967316839051312,
+            0.6697563964808555,
+            0.16917786000000004,
+            0.13806588600000003
+          ],
+          "latency_ms": 229.3534278869629,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "What is the chemical formula for water?",
+          "query_type": "oltp",
+          "confidence": 0.7762098908592657,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.6453582272130344,
+            0.5866867891448011,
+            0.5455899784646917,
+            0.5168329504204954,
+            0.17127867900000002
+          ],
+          "latency_ms": 317.0459270477295,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "Compare machine learning and deep learning",
+          "query_type": "olap",
+          "confidence": 0.660774232164496,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.730464,
+            0.678312,
+            0.5697456,
+            0.55698293,
+            0.530939
+          ],
+          "latency_ms": 20.467758178710938,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "What are the differences between AI and ML?",
+          "query_type": "olap",
+          "confidence": 0.7646512293944218,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.58390725,
+            0.55409247,
+            0.55212694,
+            0.5377992,
+            0.5234568
+          ],
+          "latency_ms": 20.298480987548828,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "Explain the relationship between neural networks and deep learning",
+          "query_type": "olap",
+          "confidence": 0.9911269573698648,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.7354613,
+            0.6928704,
+            0.67924154,
+            0.67092013,
+            0.62768346
+          ],
+          "latency_ms": 20.27273178100586,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "How do transformers differ from RNNs?",
+          "query_type": "oltp",
+          "confidence": 0.617286128845528,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.797266948,
+            0.6556346454154125,
+            0.5356371082995852,
+            0.5200898185972731,
+            0.5048218469257475
+          ],
+          "latency_ms": 277.96316146850586,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "What are the advantages and disadvantages of supervised learning?",
+          "query_type": "olap",
+          "confidence": 0.7455839595393952,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.51552033,
+            0.50773436,
+            0.49317038,
+            0.476867,
+            0.46534735
+          ],
+          "latency_ms": 19.911527633666992,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "Compare supervised and unsupervised learning approaches",
+          "query_type": "olap",
+          "confidence": 0.6367265039690843,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.42786244,
+            0.41091642,
+            0.3575323,
+            0.3553368,
+            0.35030857
+          ],
+          "latency_ms": 18.422842025756836,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "How does reinforcement learning relate to other ML paradigms?",
+          "query_type": "olap",
+          "confidence": 0.9651340847654649,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.4979443,
+            0.49184757,
+            0.478983,
+            0.4785776,
+            0.47488374
+          ],
+          "latency_ms": 21.23093605041504,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "What are the key differences between CNNs and RNNs?",
+          "query_type": "olap",
+          "confidence": 0.7720161273380328,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.5135985,
+            0.51094604,
+            0.51037943,
+            0.5051508,
+            0.49364248
+          ],
+          "latency_ms": 21.216392517089844,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "Explain the evolution of NLP from rule-based to transformer models",
+          "query_type": "olap",
+          "confidence": 0.9909717059332616,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.47884277,
+            0.45768598,
+            0.43474865,
+            0.43296924,
+            0.43164617
+          ],
+          "latency_ms": 20.327329635620117,
+          "config_name": "feature_hybrid"
+        },
+        {
+          "query": "Compare different optimization algorithms used in deep learning",
+          "query_type": "olap",
+          "confidence": 0.6985001608633092,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.52206624,
+            0.4716491,
+            0.46033943,
+            0.39550185,
+            0.3729824
+          ],
+          "latency_ms": 20.135164260864258,
+          "config_name": "feature_hybrid"
+        }
+      ],
+      "avg_latency_ms": 458.74500274658203,
+      "avg_confidence": 0.7585791250591781,
+      "routing_accuracy": {
+        "oltp": 11,
+        "olap": 9
+      },
+      "num_queries": 20
+    },
+    {
+      "config": {
+        "name": "feature_hybrid_rerank_oltp",
+        "classifier_type": "feature",
+        "classifier_model": null,
+        "router_model": "models/feature_router.pkl",
+        "use_hybrid": true,
+        "use_reranker": true,
+        "oltp_reranker": "tinybert",
+        "olap_reranker": "minilm",
+        "description": "Feature classifier, hybrid retrieval, with reranking"
+      },
+      "queries": [
+        {
+          "query": "What is machine learning?",
+          "query_type": "oltp",
+          "confidence": 0.8418240475462142,
+          "num_retrieved": 10,
+          "top_scores": [
+            1.4772154092788696,
+            -1.1701956987380981,
+            -3.748076915740967,
+            -4.117790222167969,
+            -4.628711700439453
+          ],
+          "latency_ms": 6755.427122116089,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "Who founded Microsoft?",
+          "query_type": "oltp",
+          "confidence": 0.5399530744977401,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.8568376898765564,
+            0.662632942199707,
+            -4.548251152038574,
+            -4.723513603210449,
+            -4.977395057678223
+          ],
+          "latency_ms": 218.3549404144287,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "What is the capital of France?",
+          "query_type": "oltp",
+          "confidence": 0.7790423072372175,
+          "num_retrieved": 10,
+          "top_scores": [
+            3.232272148132324,
+            -1.592259407043457,
+            -2.1933209896087646,
+            -3.996518611907959,
+            -4.51809024810791
+          ],
+          "latency_ms": 326.5550136566162,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "When was Python created?",
+          "query_type": "oltp",
+          "confidence": 0.8109650365918537,
+          "num_retrieved": 10,
+          "top_scores": [
+            -5.639553070068359,
+            -7.543203830718994,
+            -7.849377632141113,
+            -8.104928970336914,
+            -8.627649307250977
+          ],
+          "latency_ms": 234.43317413330078,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "What is the speed of light?",
+          "query_type": "oltp",
+          "confidence": 0.7885824310683367,
+          "num_retrieved": 10,
+          "top_scores": [
+            6.5068359375,
+            3.229203701019287,
+            3.0817301273345947,
+            0.412455677986145,
+            0.13515502214431763
+          ],
+          "latency_ms": 315.06800651550293,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "Who wrote Romeo and Juliet?",
+          "query_type": "oltp",
+          "confidence": 0.6093529743098565,
+          "num_retrieved": 10,
+          "top_scores": [
+            6.539973735809326,
+            6.461647987365723,
+            6.201592445373535,
+            4.977482795715332,
+            1.216410756111145
+          ],
+          "latency_ms": 297.81150817871094,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "What is the largest planet?",
+          "query_type": "oltp",
+          "confidence": 0.8286759703899318,
+          "num_retrieved": 10,
+          "top_scores": [
+            5.4267377853393555,
+            5.37556791305542,
+            3.914353370666504,
+            3.2113707065582275,
+            2.8041577339172363
+          ],
+          "latency_ms": 293.87736320495605,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "What is artificial intelligence?",
+          "query_type": "oltp",
+          "confidence": 0.7824163606884957,
+          "num_retrieved": 10,
+          "top_scores": [
+            8.509563446044922,
+            7.562861919403076,
+            7.337547779083252,
+            -2.225724697113037,
+            -3.8306334018707275
+          ],
+          "latency_ms": 253.51262092590332,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "Who invented the telephone?",
+          "query_type": "oltp",
+          "confidence": 0.5717893178117928,
+          "num_retrieved": 10,
+          "top_scores": [
+            5.0263590812683105,
+            -5.752712726593018,
+            -5.956206321716309,
+            -6.3858137130737305,
+            -6.638020992279053
+          ],
+          "latency_ms": 272.0363140106201,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "What is the chemical formula for water?",
+          "query_type": "oltp",
+          "confidence": 0.7762098908592657,
+          "num_retrieved": 10,
+          "top_scores": [
+            7.152490615844727,
+            -0.7553132772445679,
+            -0.9070573449134827,
+            -0.9861519932746887,
+            -2.0266239643096924
+          ],
+          "latency_ms": 352.73194313049316,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "Compare machine learning and deep learning",
+          "query_type": "olap",
+          "confidence": 0.660774232164496,
+          "num_retrieved": 10,
+          "top_scores": [
+            9.49751091003418,
+            7.147060394287109,
+            5.6460065841674805,
+            5.211687088012695,
+            4.387320518493652
+          ],
+          "latency_ms": 810.2097511291504,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "What are the differences between AI and ML?",
+          "query_type": "olap",
+          "confidence": 0.7646512293944218,
+          "num_retrieved": 10,
+          "top_scores": [
+            1.611240267753601,
+            1.4533401727676392,
+            1.37846839427948,
+            0.736706018447876,
+            -0.3889468014240265
+          ],
+          "latency_ms": 35.715579986572266,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "Explain the relationship between neural networks and deep learning",
+          "query_type": "olap",
+          "confidence": 0.9911269573698648,
+          "num_retrieved": 10,
+          "top_scores": [
+            5.336747169494629,
+            2.192603826522827,
+            -1.0498156547546387,
+            -1.8421653509140015,
+            -1.9196100234985352
+          ],
+          "latency_ms": 34.766197204589844,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "How do transformers differ from RNNs?",
+          "query_type": "oltp",
+          "confidence": 0.617286128845528,
+          "num_retrieved": 10,
+          "top_scores": [
+            -4.784241199493408,
+            -7.147006988525391,
+            -7.562836647033691,
+            -7.658779144287109,
+            -7.660965919494629
+          ],
+          "latency_ms": 296.10657691955566,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "What are the advantages and disadvantages of supervised learning?",
+          "query_type": "olap",
+          "confidence": 0.7455839595393952,
+          "num_retrieved": 10,
+          "top_scores": [
+            -0.5006303787231445,
+            -1.7109943628311157,
+            -2.6833441257476807,
+            -3.0112147331237793,
+            -3.6081175804138184
+          ],
+          "latency_ms": 41.43953323364258,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "Compare supervised and unsupervised learning approaches",
+          "query_type": "olap",
+          "confidence": 0.6367265039690843,
+          "num_retrieved": 10,
+          "top_scores": [
+            -2.0438523292541504,
+            -5.373046398162842,
+            -6.064108371734619,
+            -6.453047275543213,
+            -6.616057395935059
+          ],
+          "latency_ms": 41.26596450805664,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "How does reinforcement learning relate to other ML paradigms?",
+          "query_type": "olap",
+          "confidence": 0.9651340847654649,
+          "num_retrieved": 10,
+          "top_scores": [
+            -1.8020597696304321,
+            -3.1487526893615723,
+            -3.881361961364746,
+            -4.318434238433838,
+            -5.067023277282715
+          ],
+          "latency_ms": 33.453941345214844,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "What are the key differences between CNNs and RNNs?",
+          "query_type": "olap",
+          "confidence": 0.7720161273380328,
+          "num_retrieved": 10,
+          "top_scores": [
+            4.264760494232178,
+            3.955435276031494,
+            3.6807711124420166,
+            2.815093517303467,
+            1.619978904724121
+          ],
+          "latency_ms": 36.074161529541016,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "Explain the evolution of NLP from rule-based to transformer models",
+          "query_type": "olap",
+          "confidence": 0.9909717059332616,
+          "num_retrieved": 10,
+          "top_scores": [
+            -5.572994232177734,
+            -8.379229545593262,
+            -9.061870574951172,
+            -11.260488510131836,
+            -11.277812004089355
+          ],
+          "latency_ms": 38.216352462768555,
+          "config_name": "feature_hybrid_rerank_oltp"
+        },
+        {
+          "query": "Compare different optimization algorithms used in deep learning",
+          "query_type": "olap",
+          "confidence": 0.6985001608633092,
+          "num_retrieved": 10,
+          "top_scores": [
+            1.302344799041748,
+            -0.17464137077331543,
+            -2.270458698272705,
+            -2.287184238433838,
+            -4.262980937957764
+          ],
+          "latency_ms": 39.64567184448242,
+          "config_name": "feature_hybrid_rerank_oltp"
+        }
+      ],
+      "avg_latency_ms": 536.3350868225098,
+      "avg_confidence": 0.7585791250591781,
+      "routing_accuracy": {
+        "oltp": 11,
+        "olap": 9
+      },
+      "num_queries": 20
+    },
+    {
+      "config": {
+        "name": "transformer_dense",
+        "classifier_type": "transformer",
+        "classifier_model": "classifier2/microsoft_MiniLM-L12-H384-uncased",
+        "router_model": null,
+        "use_hybrid": false,
+        "use_reranker": false,
+        "oltp_reranker": null,
+        "olap_reranker": null,
+        "description": "Transformer classifier (MiniLM-L12), dense-only retrieval"
+      },
+      "queries": [
+        {
+          "query": "What is machine learning?",
+          "query_type": "oltp",
+          "confidence": 0.9997944235801697,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.54654205,
+            0.48734882,
+            0.43605536,
+            0.3930177,
+            0.38494658
+          ],
+          "latency_ms": 49.37553405761719,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "Who founded Microsoft?",
+          "query_type": "olap",
+          "confidence": 0.9998981952667236,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.71896535,
+            0.71543723,
+            0.67667985,
+            0.67190176,
+            0.5902909
+          ],
+          "latency_ms": 46.16427421569824,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "What is the capital of France?",
+          "query_type": "olap",
+          "confidence": 0.9999294281005859,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.58836424,
+            0.5643844,
+            0.5643747,
+            0.5498326,
+            0.53457284
+          ],
+          "latency_ms": 51.04804039001465,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "When was Python created?",
+          "query_type": "olap",
+          "confidence": 0.8304532766342163,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.6367147,
+            0.5771497,
+            0.5697063,
+            0.56325024,
+            0.5593607
+          ],
+          "latency_ms": 52.27303504943848,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "What is the speed of light?",
+          "query_type": "oltp",
+          "confidence": 0.9999078512191772,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.5397071,
+            0.52284926,
+            0.5206257,
+            0.5126356,
+            0.47523162
+          ],
+          "latency_ms": 42.64569282531738,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "Who wrote Romeo and Juliet?",
+          "query_type": "oltp",
+          "confidence": 0.9923591017723083,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.62046957,
+            0.59129333,
+            0.56370676,
+            0.5637063,
+            0.5609181
+          ],
+          "latency_ms": 43.19429397583008,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "What is the largest planet?",
+          "query_type": "oltp",
+          "confidence": 0.99983811378479,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.6348833,
+            0.6290332,
+            0.627208,
+            0.61288774,
+            0.6055083
+          ],
+          "latency_ms": 42.91582107543945,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "What is artificial intelligence?",
+          "query_type": "oltp",
+          "confidence": 0.9997901320457458,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.7642236,
+            0.6477161,
+            0.55243903,
+            0.49693906,
+            0.4714601
+          ],
+          "latency_ms": 47.95718193054199,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "Who invented the telephone?",
+          "query_type": "oltp",
+          "confidence": 0.9985686540603638,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.5639262,
+            0.46021962,
+            0.4420349,
+            0.44177204,
+            0.44002438
+          ],
+          "latency_ms": 44.35420036315918,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "What is the chemical formula for water?",
+          "query_type": "oltp",
+          "confidence": 0.9998286962509155,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.57092893,
+            0.5700033,
+            0.5587868,
+            0.55503774,
+            0.5058385
+          ],
+          "latency_ms": 42.99044609069824,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "Compare machine learning and deep learning",
+          "query_type": "oltp",
+          "confidence": 0.9999442100524902,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.55698293,
+            0.35426104,
+            0.32211334,
+            0.3202889,
+            0.30452263
+          ],
+          "latency_ms": 47.95050621032715,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "What are the differences between AI and ML?",
+          "query_type": "oltp",
+          "confidence": 0.9997695088386536,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.55212694,
+            0.45065832,
+            0.4210519,
+            0.41961223,
+            0.39555353
+          ],
+          "latency_ms": 46.825408935546875,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "Explain the relationship between neural networks and deep learning",
+          "query_type": "oltp",
+          "confidence": 0.9999446868896484,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.67092013,
+            0.5212923,
+            0.4252269,
+            0.41390565,
+            0.3969361
+          ],
+          "latency_ms": 51.79166793823242,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "How do transformers differ from RNNs?",
+          "query_type": "oltp",
+          "confidence": 0.9990780353546143,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.41519195,
+            0.38943863,
+            0.3689274,
+            0.36424422,
+            0.3604977
+          ],
+          "latency_ms": 46.828508377075195,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "What are the advantages and disadvantages of supervised learning?",
+          "query_type": "oltp",
+          "confidence": 0.999909520149231,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.45038682,
+            0.42444026,
+            0.42046624,
+            0.41453072,
+            0.3805796
+          ],
+          "latency_ms": 44.905900955200195,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "Compare supervised and unsupervised learning approaches",
+          "query_type": "oltp",
+          "confidence": 0.9999438524246216,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.3553368,
+            0.28430215,
+            0.275143,
+            0.27248716,
+            0.26973963
+          ],
+          "latency_ms": 43.46060752868652,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "How does reinforcement learning relate to other ML paradigms?",
+          "query_type": "oltp",
+          "confidence": 0.9987491369247437,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.44367224,
+            0.37381655,
+            0.3715217,
+            0.37050843,
+            0.36184692
+          ],
+          "latency_ms": 45.97020149230957,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "What are the key differences between CNNs and RNNs?",
+          "query_type": "olap",
+          "confidence": 0.9999301433563232,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.5135985,
+            0.51094604,
+            0.51037943,
+            0.5051508,
+            0.49364248
+          ],
+          "latency_ms": 45.624732971191406,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "Explain the evolution of NLP from rule-based to transformer models",
+          "query_type": "oltp",
+          "confidence": 0.9999433755874634,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.45768598,
+            0.43164617,
+            0.38007653,
+            0.35647437,
+            0.3562842
+          ],
+          "latency_ms": 44.28291320800781,
+          "config_name": "transformer_dense"
+        },
+        {
+          "query": "Compare different optimization algorithms used in deep learning",
+          "query_type": "oltp",
+          "confidence": 0.999944806098938,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.3729824,
+            0.34248376,
+            0.32165617,
+            0.31441006,
+            0.30174544
+          ],
+          "latency_ms": 44.441938400268555,
+          "config_name": "transformer_dense"
+        }
+      ],
+      "avg_latency_ms": 46.25004529953003,
+      "avg_confidence": 0.9908762574195862,
+      "routing_accuracy": {
+        "oltp": 16,
+        "olap": 4
+      },
+      "num_queries": 20
+    },
+    {
+      "config": {
+        "name": "transformer_hybrid",
+        "classifier_type": "transformer",
+        "classifier_model": "classifier2/microsoft_MiniLM-L12-H384-uncased",
+        "router_model": null,
+        "use_hybrid": true,
+        "use_reranker": false,
+        "oltp_reranker": null,
+        "olap_reranker": null,
+        "description": "Transformer classifier (MiniLM-L12) with hybrid retrieval"
+      },
+      "queries": [
+        {
+          "query": "What is machine learning?",
+          "query_type": "oltp",
+          "confidence": 0.9997944235801697,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.7472035112965782,
+            0.7347641809719198,
+            0.7292344264291093,
+            0.6624116476626682,
+            0.6475369921671243
+          ],
+          "latency_ms": 6397.830963134766,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "Who founded Microsoft?",
+          "query_type": "olap",
+          "confidence": 0.9998981952667236,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.71896535,
+            0.71543723,
+            0.67667985,
+            0.67190176,
+            0.5902909
+          ],
+          "latency_ms": 48.13981056213379,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "What is the capital of France?",
+          "query_type": "olap",
+          "confidence": 0.9999294281005859,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.58836424,
+            0.5643844,
+            0.5643747,
+            0.5498326,
+            0.53457284
+          ],
+          "latency_ms": 42.69289970397949,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "When was Python created?",
+          "query_type": "olap",
+          "confidence": 0.8304532766342163,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.6367147,
+            0.5771497,
+            0.5697063,
+            0.56325024,
+            0.5593607
+          ],
+          "latency_ms": 42.33574867248535,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "What is the speed of light?",
+          "query_type": "oltp",
+          "confidence": 0.9999078512191772,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.7107479233989498,
+            0.6960606757774053,
+            0.6773320027961975,
+            0.6638760657410433,
+            0.6623087337171522
+          ],
+          "latency_ms": 320.51682472229004,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "Who wrote Romeo and Juliet?",
+          "query_type": "oltp",
+          "confidence": 0.9923591017723083,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.886140871,
+            0.7513615354792248,
+            0.6624806783058608,
+            0.6368665674960706,
+            0.6001426243750179
+          ],
+          "latency_ms": 293.8206195831299,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "What is the largest planet?",
+          "query_type": "oltp",
+          "confidence": 0.99983811378479,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.8235472317439474,
+            0.7504234862054643,
+            0.7339571068397718,
+            0.19046499000000003,
+            0.18870996
+          ],
+          "latency_ms": 295.58801651000977,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "What is artificial intelligence?",
+          "query_type": "oltp",
+          "confidence": 0.9997901320457458,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.89431483,
+            0.6978217525483549,
+            0.22926708000000004,
+            0.16573170900000003,
+            0.14143803000000002
+          ],
+          "latency_ms": 279.3302536010742,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "Who invented the telephone?",
+          "query_type": "oltp",
+          "confidence": 0.9985686540603638,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.7099239899879356,
+            0.6967316839051312,
+            0.6697563964808555,
+            0.16917786000000004,
+            0.13806588600000003
+          ],
+          "latency_ms": 268.20993423461914,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "What is the chemical formula for water?",
+          "query_type": "oltp",
+          "confidence": 0.9998286962509155,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.6453582272130344,
+            0.5866867891448011,
+            0.5455899784646917,
+            0.5168329504204954,
+            0.17127867900000002
+          ],
+          "latency_ms": 362.4458312988281,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "Compare machine learning and deep learning",
+          "query_type": "oltp",
+          "confidence": 0.9999442100524902,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.79608667,
+            0.5501916690056217,
+            0.16709487900000003,
+            0.10627831200000003,
+            0.09663400200000002
+          ],
+          "latency_ms": 319.9160099029541,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "What are the differences between AI and ML?",
+          "query_type": "oltp",
+          "confidence": 0.9997695088386536,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.16563808200000002,
+            0.13519749600000003,
+            0.12631557000000002,
+            0.125883669,
+            0.11866605900000002
+          ],
+          "latency_ms": 370.9449768066406,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "Explain the relationship between neural networks and deep learning",
+          "query_type": "oltp",
+          "confidence": 0.9999446868896484,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.7631944918825683,
+            0.6818701938940217,
+            0.6658901010300601,
+            0.6476199618809925,
+            0.6350269044533702
+          ],
+          "latency_ms": 406.25953674316406,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "How do transformers differ from RNNs?",
+          "query_type": "oltp",
+          "confidence": 0.9990780353546143,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.797266948,
+            0.6556346454154125,
+            0.5356371082995852,
+            0.5200898185972731,
+            0.5048218469257475
+          ],
+          "latency_ms": 320.8005428314209,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "What are the advantages and disadvantages of supervised learning?",
+          "query_type": "oltp",
+          "confidence": 0.999909520149231,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.7831622897605911,
+            0.7055665189660356,
+            0.687929596560696,
+            0.6295789613909037,
+            0.6269903820641364
+          ],
+          "latency_ms": 394.8695659637451,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "Compare supervised and unsupervised learning approaches",
+          "query_type": "oltp",
+          "confidence": 0.9999438524246216,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.6297442508030247,
+            0.5745438180580725,
+            0.547963906849371,
+            0.5363044329604164,
+            0.5215581502731206
+          ],
+          "latency_ms": 302.02603340148926,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "How does reinforcement learning relate to other ML paradigms?",
+          "query_type": "oltp",
+          "confidence": 0.9987491369247437,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.6948320324527917,
+            0.6642928458483136,
+            0.6044245868449776,
+            0.13310167200000003,
+            0.11214496500000003
+          ],
+          "latency_ms": 401.6377925872803,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "What are the key differences between CNNs and RNNs?",
+          "query_type": "olap",
+          "confidence": 0.9999301433563232,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.5135985,
+            0.51094604,
+            0.51037943,
+            0.5051508,
+            0.49364248
+          ],
+          "latency_ms": 44.257402420043945,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "Explain the evolution of NLP from rule-based to transformer models",
+          "query_type": "oltp",
+          "confidence": 0.9999433755874634,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.7070844518815931,
+            0.6247185264553491,
+            0.137305794,
+            0.11402295900000002,
+            0.10694231100000001
+          ],
+          "latency_ms": 430.19843101501465,
+          "config_name": "transformer_hybrid"
+        },
+        {
+          "query": "Compare different optimization algorithms used in deep learning",
+          "query_type": "oltp",
+          "confidence": 0.999944806098938,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.7567031900430689,
+            0.6938860155624589,
+            0.6356665210645144,
+            0.6304940524926224,
+            0.6057700601429488
+          ],
+          "latency_ms": 370.58091163635254,
+          "config_name": "transformer_hybrid"
+        }
+      ],
+      "avg_latency_ms": 585.620105266571,
+      "avg_confidence": 0.9908762574195862,
+      "routing_accuracy": {
+        "oltp": 16,
+        "olap": 4
+      },
+      "num_queries": 20
+    },
+    {
+      "config": {
+        "name": "transformer_hybrid_rerank",
+        "classifier_type": "transformer",
+        "classifier_model": "classifier2/microsoft_MiniLM-L12-H384-uncased",
+        "router_model": null,
+        "use_hybrid": true,
+        "use_reranker": true,
+        "oltp_reranker": "tinybert",
+        "olap_reranker": "minilm",
+        "description": "Transformer classifier (MiniLM-L12), hybrid retrieval, with reranking"
+      },
+      "queries": [
+        {
+          "query": "What is machine learning?",
+          "query_type": "oltp",
+          "confidence": 0.9997944235801697,
+          "num_retrieved": 10,
+          "top_scores": [
+            1.4772154092788696,
+            -1.1701956987380981,
+            -3.748076915740967,
+            -4.117790222167969,
+            -4.628711700439453
+          ],
+          "latency_ms": 7075.716733932495,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "Who founded Microsoft?",
+          "query_type": "olap",
+          "confidence": 0.9998981952667236,
+          "num_retrieved": 10,
+          "top_scores": [
+            10.521001815795898,
+            8.925923347473145,
+            7.131314277648926,
+            3.44755220413208,
+            3.1677849292755127
+          ],
+          "latency_ms": 589.1580581665039,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "What is the capital of France?",
+          "query_type": "olap",
+          "confidence": 0.9999294281005859,
+          "num_retrieved": 10,
+          "top_scores": [
+            4.371723651885986,
+            4.157327175140381,
+            1.9599454402923584,
+            0.6031417846679688,
+            0.49890074133872986
+          ],
+          "latency_ms": 71.06304168701172,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "When was Python created?",
+          "query_type": "olap",
+          "confidence": 0.8304532766342163,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.6034440398216248,
+            -1.043424129486084,
+            -1.2804152965545654,
+            -3.3842062950134277,
+            -3.6000711917877197
+          ],
+          "latency_ms": 63.92359733581543,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "What is the speed of light?",
+          "query_type": "oltp",
+          "confidence": 0.9999078512191772,
+          "num_retrieved": 10,
+          "top_scores": [
+            6.5068359375,
+            3.229203701019287,
+            3.0817301273345947,
+            0.412455677986145,
+            0.13515502214431763
+          ],
+          "latency_ms": 336.3494873046875,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "Who wrote Romeo and Juliet?",
+          "query_type": "oltp",
+          "confidence": 0.9923591017723083,
+          "num_retrieved": 10,
+          "top_scores": [
+            6.539973735809326,
+            6.461647987365723,
+            6.201592445373535,
+            4.977482795715332,
+            1.216410756111145
+          ],
+          "latency_ms": 327.73518562316895,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "What is the largest planet?",
+          "query_type": "oltp",
+          "confidence": 0.99983811378479,
+          "num_retrieved": 10,
+          "top_scores": [
+            5.4267377853393555,
+            5.37556791305542,
+            3.914353370666504,
+            3.2113707065582275,
+            2.8041577339172363
+          ],
+          "latency_ms": 307.8434467315674,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "What is artificial intelligence?",
+          "query_type": "oltp",
+          "confidence": 0.9997901320457458,
+          "num_retrieved": 10,
+          "top_scores": [
+            8.509563446044922,
+            7.562861919403076,
+            7.337547779083252,
+            -2.225724697113037,
+            -3.8306334018707275
+          ],
+          "latency_ms": 283.89859199523926,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "Who invented the telephone?",
+          "query_type": "oltp",
+          "confidence": 0.9985686540603638,
+          "num_retrieved": 10,
+          "top_scores": [
+            5.0263590812683105,
+            -5.752712726593018,
+            -5.956206321716309,
+            -6.3858137130737305,
+            -6.638020992279053
+          ],
+          "latency_ms": 292.02795028686523,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "What is the chemical formula for water?",
+          "query_type": "oltp",
+          "confidence": 0.9998286962509155,
+          "num_retrieved": 10,
+          "top_scores": [
+            7.152490615844727,
+            -0.7553132772445679,
+            -0.9070573449134827,
+            -0.9861519932746887,
+            -2.0266239643096924
+          ],
+          "latency_ms": 371.81878089904785,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "Compare machine learning and deep learning",
+          "query_type": "oltp",
+          "confidence": 0.9999442100524902,
+          "num_retrieved": 10,
+          "top_scores": [
+            5.620206356048584,
+            -6.634699821472168,
+            -7.6613383293151855,
+            -9.407783508300781,
+            -10.402185440063477
+          ],
+          "latency_ms": 337.1603488922119,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "What are the differences between AI and ML?",
+          "query_type": "oltp",
+          "confidence": 0.9997695088386536,
+          "num_retrieved": 10,
+          "top_scores": [
+            3.7042183876037598,
+            1.9179540872573853,
+            1.5977261066436768,
+            0.5601218342781067,
+            -5.347121238708496
+          ],
+          "latency_ms": 397.4108695983887,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "Explain the relationship between neural networks and deep learning",
+          "query_type": "oltp",
+          "confidence": 0.9999446868896484,
+          "num_retrieved": 10,
+          "top_scores": [
+            -5.0290069580078125,
+            -7.212166786193848,
+            -7.699491500854492,
+            -7.867350101470947,
+            -8.783076286315918
+          ],
+          "latency_ms": 419.644832611084,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "How do transformers differ from RNNs?",
+          "query_type": "oltp",
+          "confidence": 0.9990780353546143,
+          "num_retrieved": 10,
+          "top_scores": [
+            -4.784241199493408,
+            -7.147006988525391,
+            -7.562836647033691,
+            -7.658779144287109,
+            -7.660965919494629
+          ],
+          "latency_ms": 344.44475173950195,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "What are the advantages and disadvantages of supervised learning?",
+          "query_type": "oltp",
+          "confidence": 0.999909520149231,
+          "num_retrieved": 10,
+          "top_scores": [
+            5.632833480834961,
+            -0.9964777827262878,
+            -2.9051554203033447,
+            -3.9664950370788574,
+            -4.901192665100098
+          ],
+          "latency_ms": 416.60141944885254,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "Compare supervised and unsupervised learning approaches",
+          "query_type": "oltp",
+          "confidence": 0.9999438524246216,
+          "num_retrieved": 10,
+          "top_scores": [
+            -8.32536506652832,
+            -8.720381736755371,
+            -8.780339241027832,
+            -9.239195823669434,
+            -9.553939819335938
+          ],
+          "latency_ms": 336.97032928466797,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "How does reinforcement learning relate to other ML paradigms?",
+          "query_type": "oltp",
+          "confidence": 0.9987491369247437,
+          "num_retrieved": 10,
+          "top_scores": [
+            -7.623800277709961,
+            -8.832170486450195,
+            -9.472379684448242,
+            -9.60845947265625,
+            -9.979636192321777
+          ],
+          "latency_ms": 415.6661033630371,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "What are the key differences between CNNs and RNNs?",
+          "query_type": "olap",
+          "confidence": 0.9999301433563232,
+          "num_retrieved": 10,
+          "top_scores": [
+            4.264760494232178,
+            3.955435276031494,
+            3.6807711124420166,
+            2.815093517303467,
+            1.619978904724121
+          ],
+          "latency_ms": 64.37039375305176,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "Explain the evolution of NLP from rule-based to transformer models",
+          "query_type": "oltp",
+          "confidence": 0.9999433755874634,
+          "num_retrieved": 10,
+          "top_scores": [
+            -9.3370943069458,
+            -9.77602481842041,
+            -10.1688232421875,
+            -10.405228614807129,
+            -10.67386245727539
+          ],
+          "latency_ms": 455.34634590148926,
+          "config_name": "transformer_hybrid_rerank"
+        },
+        {
+          "query": "Compare different optimization algorithms used in deep learning",
+          "query_type": "oltp",
+          "confidence": 0.999944806098938,
+          "num_retrieved": 10,
+          "top_scores": [
+            -6.199334144592285,
+            -7.926767349243164,
+            -8.238802909851074,
+            -8.28968334197998,
+            -8.441112518310547
+          ],
+          "latency_ms": 407.52196311950684,
+          "config_name": "transformer_hybrid_rerank"
+        }
+      ],
+      "avg_latency_ms": 665.7336115837097,
+      "avg_confidence": 0.9908762574195862,
+      "routing_accuracy": {
+        "oltp": 16,
+        "olap": 4
+      },
+      "num_queries": 20
+    },
+    {
+      "config": {
+        "name": "feature_dense_rerank",
+        "classifier_type": "feature",
+        "classifier_model": null,
+        "router_model": "models/feature_router.pkl",
+        "use_hybrid": false,
+        "use_reranker": true,
+        "oltp_reranker": "tinybert",
+        "olap_reranker": "minilm",
+        "description": "Feature classifier, dense-only, with reranking (hybrid ablation)"
+      },
+      "queries": [
+        {
+          "query": "What is machine learning?",
+          "query_type": "oltp",
+          "confidence": 0.8418240475462142,
+          "num_retrieved": 10,
+          "top_scores": [
+            1.4772154092788696,
+            -1.1701956987380981,
+            -3.748076915740967,
+            -4.117790222167969,
+            -4.628711700439453
+          ],
+          "latency_ms": 577.7859687805176,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "Who founded Microsoft?",
+          "query_type": "oltp",
+          "confidence": 0.5399530744977401,
+          "num_retrieved": 10,
+          "top_scores": [
+            0.8568376898765564,
+            0.662632942199707,
+            -4.548251152038574,
+            -4.723513603210449,
+            -4.977395057678223
+          ],
+          "latency_ms": 45.566558837890625,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "What is the capital of France?",
+          "query_type": "oltp",
+          "confidence": 0.7790423072372175,
+          "num_retrieved": 10,
+          "top_scores": [
+            3.232272148132324,
+            -1.592259407043457,
+            -2.1933209896087646,
+            -3.996518611907959,
+            -4.51809024810791
+          ],
+          "latency_ms": 48.062801361083984,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "When was Python created?",
+          "query_type": "oltp",
+          "confidence": 0.8109650365918537,
+          "num_retrieved": 10,
+          "top_scores": [
+            -5.639553070068359,
+            -7.543203830718994,
+            -7.849377632141113,
+            -8.104928970336914,
+            -8.627649307250977
+          ],
+          "latency_ms": 44.02303695678711,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "What is the speed of light?",
+          "query_type": "oltp",
+          "confidence": 0.7885824310683367,
+          "num_retrieved": 10,
+          "top_scores": [
+            6.959799766540527,
+            6.5068359375,
+            3.229203701019287,
+            3.0817301273345947,
+            0.412455677986145
+          ],
+          "latency_ms": 45.50957679748535,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "Who wrote Romeo and Juliet?",
+          "query_type": "oltp",
+          "confidence": 0.6093529743098565,
+          "num_retrieved": 10,
+          "top_scores": [
+            6.539973735809326,
+            6.461647987365723,
+            6.201592445373535,
+            4.977482795715332,
+            1.216410756111145
+          ],
+          "latency_ms": 55.663347244262695,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "What is the largest planet?",
+          "query_type": "oltp",
+          "confidence": 0.8286759703899318,
+          "num_retrieved": 10,
+          "top_scores": [
+            5.4267377853393555,
+            5.37556791305542,
+            3.914353370666504,
+            3.2113707065582275,
+            3.2063989639282227
+          ],
+          "latency_ms": 54.79717254638672,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "What is artificial intelligence?",
+          "query_type": "oltp",
+          "confidence": 0.7824163606884957,
+          "num_retrieved": 10,
+          "top_scores": [
+            8.509563446044922,
+            7.562861919403076,
+            7.337547779083252,
+            -2.225724697113037,
+            -3.8306334018707275
+          ],
+          "latency_ms": 39.36290740966797,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "Who invented the telephone?",
+          "query_type": "oltp",
+          "confidence": 0.5717893178117928,
+          "num_retrieved": 10,
+          "top_scores": [
+            5.0263590812683105,
+            -5.752712726593018,
+            -5.956206321716309,
+            -6.3858137130737305,
+            -6.638020992279053
+          ],
+          "latency_ms": 52.61397361755371,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "What is the chemical formula for water?",
+          "query_type": "oltp",
+          "confidence": 0.7762098908592657,
+          "num_retrieved": 10,
+          "top_scores": [
+            7.152490615844727,
+            -0.7553132772445679,
+            -0.9070573449134827,
+            -0.9861519932746887,
+            -2.0266239643096924
+          ],
+          "latency_ms": 42.27566719055176,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "Compare machine learning and deep learning",
+          "query_type": "olap",
+          "confidence": 0.660774232164496,
+          "num_retrieved": 10,
+          "top_scores": [
+            9.49751091003418,
+            7.147060394287109,
+            5.6460065841674805,
+            5.211687088012695,
+            4.387320518493652
+          ],
+          "latency_ms": 556.0917854309082,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "What are the differences between AI and ML?",
+          "query_type": "olap",
+          "confidence": 0.7646512293944218,
+          "num_retrieved": 10,
+          "top_scores": [
+            1.611240267753601,
+            1.4533401727676392,
+            1.37846839427948,
+            0.736706018447876,
+            -0.3889468014240265
+          ],
+          "latency_ms": 36.40437126159668,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "Explain the relationship between neural networks and deep learning",
+          "query_type": "olap",
+          "confidence": 0.9911269573698648,
+          "num_retrieved": 10,
+          "top_scores": [
+            5.336747169494629,
+            2.192603826522827,
+            -1.0498156547546387,
+            -1.8421653509140015,
+            -1.9196100234985352
+          ],
+          "latency_ms": 36.84735298156738,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "How do transformers differ from RNNs?",
+          "query_type": "oltp",
+          "confidence": 0.617286128845528,
+          "num_retrieved": 10,
+          "top_scores": [
+            -7.147006988525391,
+            -7.489378929138184,
+            -7.562836647033691,
+            -7.658779144287109,
+            -7.660965919494629
+          ],
+          "latency_ms": 41.129350662231445,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "What are the advantages and disadvantages of supervised learning?",
+          "query_type": "olap",
+          "confidence": 0.7455839595393952,
+          "num_retrieved": 10,
+          "top_scores": [
+            -0.5006303787231445,
+            -1.7109943628311157,
+            -2.6833441257476807,
+            -3.0112147331237793,
+            -3.6081175804138184
+          ],
+          "latency_ms": 42.77443885803223,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "Compare supervised and unsupervised learning approaches",
+          "query_type": "olap",
+          "confidence": 0.6367265039690843,
+          "num_retrieved": 10,
+          "top_scores": [
+            -2.0438523292541504,
+            -5.373046398162842,
+            -6.064108371734619,
+            -6.453047275543213,
+            -6.616057395935059
+          ],
+          "latency_ms": 44.6321964263916,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "How does reinforcement learning relate to other ML paradigms?",
+          "query_type": "olap",
+          "confidence": 0.9651340847654649,
+          "num_retrieved": 10,
+          "top_scores": [
+            -1.8020597696304321,
+            -3.1487526893615723,
+            -3.881361961364746,
+            -4.318434238433838,
+            -5.067023277282715
+          ],
+          "latency_ms": 34.72089767456055,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "What are the key differences between CNNs and RNNs?",
+          "query_type": "olap",
+          "confidence": 0.7720161273380328,
+          "num_retrieved": 10,
+          "top_scores": [
+            4.264760494232178,
+            3.955435276031494,
+            3.6807711124420166,
+            2.815093517303467,
+            1.619978904724121
+          ],
+          "latency_ms": 37.43314743041992,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "Explain the evolution of NLP from rule-based to transformer models",
+          "query_type": "olap",
+          "confidence": 0.9909717059332616,
+          "num_retrieved": 10,
+          "top_scores": [
+            -5.572994232177734,
+            -8.379229545593262,
+            -9.061870574951172,
+            -11.260488510131836,
+            -11.277812004089355
+          ],
+          "latency_ms": 41.48149490356445,
+          "config_name": "feature_dense_rerank"
+        },
+        {
+          "query": "Compare different optimization algorithms used in deep learning",
+          "query_type": "olap",
+          "confidence": 0.6985001608633092,
+          "num_retrieved": 10,
+          "top_scores": [
+            1.302344799041748,
+            -0.17464137077331543,
+            -2.270458698272705,
+            -2.287184238433838,
+            -4.262980937957764
+          ],
+          "latency_ms": 40.941715240478516,
+          "config_name": "feature_dense_rerank"
+        }
+      ],
+      "avg_latency_ms": 95.90588808059692,
+      "avg_confidence": 0.7585791250591781,
+      "routing_accuracy": {
+        "oltp": 11,
+        "olap": 9
+      },
+      "num_queries": 20
+    }
+  ]
+}

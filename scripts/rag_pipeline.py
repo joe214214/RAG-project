@@ -86,6 +86,10 @@ class QueryAwareRAGPipeline:
         llm_max_tokens: int = 512,
         skip_classifier: bool = False,
         default_collection: str = "oltp_chunks",
+        use_cohere: bool = False,
+        cohere_api_key: Optional[str] = None,
+        cohere_embed_model: str = "embed-english-light-v3.0",  # 384 dims to match sentence-transformers
+        cohere_rerank_model: str = "rerank-english-v3.0",
     ):
         """
         Initialize the RAG pipeline.
@@ -106,6 +110,10 @@ class QueryAwareRAGPipeline:
             llm_max_tokens: Max tokens for answer generation (default: 512)
             skip_classifier: Skip classification entirely, use default_collection for all queries (minimal baseline)
             default_collection: Collection to use when skip_classifier=True (default: "oltp_chunks")
+            use_cohere: Enable Cohere API for embeddings and reranking (requires COHERE_API_KEY)
+            cohere_api_key: Cohere API key (or set COHERE_API_KEY environment variable)
+            cohere_embed_model: Cohere embedding model (default: embed-english-v3.0)
+            cohere_rerank_model: Cohere rerank model (default: rerank-english-v3.0)
         """
         # Skip classifier for minimal baseline
         self.skip_classifier = skip_classifier
@@ -223,6 +231,25 @@ class QueryAwareRAGPipeline:
         self.embedder = SentenceTransformer(embed_model, device=device)
         print("✓ Embedding model loaded")
         
+        # Cohere API support (optional)
+        self.use_cohere = use_cohere
+        self.cohere_client = None
+        self.cohere_embed_model = cohere_embed_model
+        self.cohere_rerank_model = cohere_rerank_model
+        
+        if use_cohere:
+            try:
+                import cohere
+                api_key = cohere_api_key or os.getenv("COHERE_API_KEY")
+                if not api_key:
+                    raise ValueError("Cohere API key required. Set COHERE_API_KEY environment variable or pass cohere_api_key parameter.")
+                self.cohere_client = cohere.ClientV2(api_key=api_key)
+                print(f"✓ Cohere API initialized (embed: {cohere_embed_model}, rerank: {cohere_rerank_model})")
+            except Exception as e:
+                print(f"⚠️  Failed to initialize Cohere API: {e}")
+                print("   Falling back to local embeddings and rerankers.")
+                self.use_cohere = False
+        
         # Qdrant client (use gRPC for ~30% better performance)
         from qdrant_client import QdrantClient, models
         self.qdrant_client = QdrantClient(
@@ -266,6 +293,8 @@ class QueryAwareRAGPipeline:
         print(f"✓ Connected to Qdrant at {qdrant_host}:{qdrant_port}")
         if use_hybrid:
             print(f"✓ Hybrid retrieval enabled (α={hybrid_alpha:.2f})")
+        if self.use_cohere:
+            print(f"✓ Cohere API enabled (will use Cohere embeddings and reranking)")
     
     def classify_query(self, query: str) -> Tuple[str, float]:
         """
@@ -544,6 +573,10 @@ Output:"""
         # Select collection based on query type
         collection = "oltp_chunks" if query_type == "oltp" else "olap_chunks"
         
+        # Use Cohere API if enabled
+        if self.use_cohere and self.cohere_client:
+            return self._retrieve_with_cohere(query, collection, query_type, top_k, use_reranker, reranker_model)
+        
         # Query-type-specific retrieval strategies
         if query_type == "oltp":
             # OLTP: Precision focus, use hybrid retrieval if enabled
@@ -555,6 +588,172 @@ Output:"""
             # OLAP: Recall focus, dense-only (hybrid not typically used for OLAP)
             # Use larger initial retrieval pool for better recall
             return self._retrieve_dense_only(query, collection, query_type, top_k, use_reranker, reranker_model)
+    
+    def _retrieve_with_cohere(
+        self,
+        query: str,
+        collection: str,
+        query_type: str,
+        top_k: int,
+        use_reranker: bool,
+        reranker_model: Optional[str],
+    ) -> List[RetrievalResult]:
+        """
+        Retrieve using Cohere API for embeddings and optional reranking.
+        
+        This method uses Cohere Embed API for query embeddings,
+        searches Qdrant with Cohere embeddings, and optionally
+        uses Cohere Rerank API for final reranking.
+        """
+        from qdrant_client import models
+        
+        if not self.cohere_client:
+            # Fallback to dense-only if Cohere client not available
+            return self._retrieve_dense_only(query, collection, query_type, top_k, use_reranker, reranker_model)
+        
+        # Step 1: Generate query embedding using Cohere Embed API
+        try:
+            embed_response = self.cohere_client.embed(
+                model=self.cohere_embed_model,
+                texts=[query],
+                input_type="search_query"
+            )
+            # Cohere API v2 returns embeddings in different structures
+            # Try multiple access patterns to handle different API versions
+            query_vector = None
+            
+            # Method 1: Direct list access (v1 API)
+            if hasattr(embed_response, 'embeddings') and isinstance(embed_response.embeddings, list):
+                query_vector = embed_response.embeddings[0]
+            # Method 2: Typed embeddings (v2 API with input_type)
+            elif hasattr(embed_response, 'embeddings'):
+                emb_obj = embed_response.embeddings
+                # Check for float attribute (typed embeddings)
+                if hasattr(emb_obj, 'float'):
+                    float_emb = emb_obj.float
+                    query_vector = float_emb[0] if isinstance(float_emb, list) else float_emb
+                # Check if it's iterable but not a list
+                elif hasattr(emb_obj, '__iter__') and not isinstance(emb_obj, str):
+                    try:
+                        query_vector = next(iter(emb_obj))
+                    except:
+                        pass
+            # Method 3: Direct response access
+            if query_vector is None and hasattr(embed_response, '__getitem__'):
+                try:
+                    query_vector = embed_response[0]
+                except:
+                    pass
+            
+            # Final validation and conversion
+            if query_vector is None:
+                raise ValueError("Could not extract embedding from Cohere response")
+            
+            # Convert to list if needed
+            if not isinstance(query_vector, list):
+                if hasattr(query_vector, '__iter__') and not isinstance(query_vector, str):
+                    query_vector = list(query_vector)
+                else:
+                    raise ValueError(f"Unexpected embedding type: {type(query_vector)}")
+                    
+        except Exception as e:
+            print(f"⚠️  Cohere embedding failed: {e}, falling back to local embeddings")
+            import traceback
+            traceback.print_exc()
+            # Fallback to local embedding
+            query_vector = self.embedder.encode(query, normalize_embeddings=True).tolist()
+        
+        # Step 2: Search Qdrant with Cohere embeddings
+        # Set HNSW search parameters
+        search_ef = 400 if query_type == "oltp" else 600
+        
+        # Determine initial retrieval pool size
+        if query_type == "oltp":
+            initial_k = max(top_k * 2, 20) if use_reranker else top_k
+        else:
+            initial_k = max(top_k * 5, 50) if use_reranker else top_k
+        
+        search_params = models.SearchParams(hnsw_ef=search_ef, exact=False)
+        results = self.qdrant_client.query_points(
+            collection_name=collection,
+            query=query_vector if isinstance(query_vector, list) else query_vector.tolist(),
+            limit=initial_k,
+            search_params=search_params,
+        )
+        
+        # Step 3: Convert to RetrievalResult objects
+        retrieved = []
+        for hit in results.points:
+            retrieved.append(RetrievalResult(
+                chunk_id=str(hit.id),
+                text=hit.payload.get("text", ""),
+                score=float(hit.score),
+                chunk_type=hit.payload.get("chunk_type", query_type),
+                source_file=hit.payload.get("source_file", "unknown"),
+                section=hit.payload.get("section", ""),
+                level=hit.payload.get("level", "leaf"),
+            ))
+        
+        # Step 4: Apply Cohere reranking if requested
+        if use_reranker and self.cohere_client:
+            retrieved = self._rerank_with_cohere(query, retrieved, top_k)
+        
+        return retrieved[:top_k]
+    
+    def _rerank_with_cohere(
+        self,
+        query: str,
+        retrieved: List[RetrievalResult],
+        top_k: int,
+    ) -> List[RetrievalResult]:
+        """
+        Rerank results using Cohere Rerank API.
+        
+        Args:
+            query: User query
+            retrieved: List of RetrievalResult objects to rerank
+            top_k: Number of top results to return
+            
+        Returns:
+            Reranked list of RetrievalResult objects
+        """
+        if not self.cohere_client:
+            return retrieved
+        
+        try:
+            # Extract document texts for reranking
+            documents = [r.text for r in retrieved]
+            
+            # Call Cohere Rerank API
+            rerank_response = self.cohere_client.rerank(
+                model=self.cohere_rerank_model,
+                query=query,
+                documents=documents,
+                top_n=top_k,
+                max_tokens_per_doc=4096
+            )
+            
+            # Map reranked results back to RetrievalResult objects
+            reranked_results = []
+            for result in rerank_response.results:
+                original_idx = result.index
+                original_result = retrieved[original_idx]
+                
+                reranked_results.append(RetrievalResult(
+                    chunk_id=original_result.chunk_id,
+                    text=original_result.text,
+                    score=float(result.relevance_score),  # Use Cohere relevance score
+                    chunk_type=original_result.chunk_type,
+                    source_file=original_result.source_file,
+                    section=original_result.section,
+                    level=original_result.level,
+                ))
+            
+            return reranked_results
+            
+        except Exception as e:
+            print(f"⚠️  Cohere reranking failed: {e}, returning original results")
+            return retrieved
     
     def _retrieve_dense_only(
         self,
@@ -943,6 +1142,7 @@ Output:"""
             metadata={
                 "num_results": len(retrieved),
                 "search_ef": 50 if query_type == "oltp" else 200,
+                "cohere_retrieval": self.use_cohere if self.use_cohere else False,
                 "hybrid_retrieval": self.use_hybrid if use_hybrid is None else use_hybrid,
                 "hybrid_alpha": self.hybrid_alpha if (self.use_hybrid or (use_hybrid is True)) else None,
                 "classifier_type": self.classifier_type,
@@ -961,7 +1161,8 @@ def print_result(result: RAGResult):
     print(f"Classifier: {result.metadata.get('classifier_type', 'unknown').upper()}")
     print(f"Type: {result.query_type.upper()} (confidence: {result.confidence:.2f})")
     print(f"Collection: {result.collection}")
-    print(f"Retrieval: {'Hybrid (BM25 + Dense)' if result.metadata.get('hybrid_retrieval') else 'Dense-only'}")
+    retrieval_type = "Cohere API" if result.metadata.get('cohere_retrieval') else ('Hybrid (BM25 + Dense)' if result.metadata.get('hybrid_retrieval') else 'Dense-only')
+    print(f"Retrieval: {retrieval_type}")
     if result.metadata.get('hybrid_alpha'):
         print(f"Hybrid α: {result.metadata['hybrid_alpha']:.2f}")
     print(f"Reranked: {'Yes' if result.reranked else 'No'}")
@@ -1074,6 +1275,10 @@ def main():
     parser.add_argument("--use-llm-answer", action="store_true", help="Enable LLM answer generation (requires OPENAI_API_KEY)")
     parser.add_argument("--llm-model", type=str, default="gpt-4o-mini", help="OpenAI model for answer generation (default: gpt-4o-mini)")
     parser.add_argument("--llm-max-tokens", type=int, default=512, help="Max tokens for answer generation (default: 512)")
+    parser.add_argument("--use-cohere", action="store_true", help="Use Cohere API for embeddings and reranking (requires COHERE_API_KEY)")
+    parser.add_argument("--cohere-api-key", type=str, default=None, help="Cohere API key (or set COHERE_API_KEY environment variable)")
+    parser.add_argument("--cohere-embed-model", type=str, default="embed-english-light-v3.0", help="Cohere embedding model (default: embed-english-light-v3.0, 384 dims to match local model)")
+    parser.add_argument("--cohere-rerank-model", type=str, default="rerank-english-v3.0", help="Cohere rerank model (default: rerank-english-v3.0)")
     parser.add_argument("--output-json", action="store_true", help="Output as JSON")
     
     args = parser.parse_args()
@@ -1108,6 +1313,10 @@ def main():
         use_llm_answer=args.use_llm_answer,
         llm_model=args.llm_model,
         llm_max_tokens=args.llm_max_tokens,
+        use_cohere=args.use_cohere,
+        cohere_api_key=args.cohere_api_key,
+        cohere_embed_model=args.cohere_embed_model,
+        cohere_rerank_model=args.cohere_rerank_model,
     )
     
     # Process query

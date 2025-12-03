@@ -834,6 +834,10 @@ def evaluate_config(
     use_text_first: bool = False,
     similarity_threshold: float = 0.25,
     similarity_method: str = "hybrid",
+    use_cohere: bool = False,
+    cohere_api_key: Optional[str] = None,
+    cohere_embed_model: str = "embed-english-light-v3.0",
+    cohere_rerank_model: str = "rerank-english-v3.0",
 ) -> EvalResults:
     """Evaluate a single configuration."""
     print(f"\n{'='*70}")
@@ -863,6 +867,10 @@ def evaluate_config(
             device=device,
             use_hybrid=config.use_hybrid,
             use_query_expansion=True,  # Enable LLM-based query expansion for BM25
+            use_cohere=use_cohere,
+            cohere_api_key=cohere_api_key,
+            cohere_embed_model=cohere_embed_model,
+            cohere_rerank_model=cohere_rerank_model,
         )
     except Exception as e:
         print(f"❌ Failed to initialize pipeline: {e}")
@@ -1177,6 +1185,11 @@ def main():
     parser.add_argument("--similarity-threshold", type=float, default=0.15, help="Text similarity threshold for relevance (0.0-1.0, default: 0.15). Lower = more lenient")
     parser.add_argument("--similarity-method", type=str, default="hybrid", choices=["jaccard", "ngram", "hybrid"], help="Text similarity method: 'jaccard' (word-level), 'ngram' (character n-grams), 'hybrid' (recommended, combines both)")
     
+    parser.add_argument("--use-cohere", action="store_true", help="Use Cohere API for embeddings and reranking (requires COHERE_API_KEY)")
+    parser.add_argument("--cohere-api-key", type=str, default=None, help="Cohere API key (or set COHERE_API_KEY environment variable)")
+    parser.add_argument("--cohere-embed-model", type=str, default="embed-english-light-v3.0", help="Cohere embedding model (default: embed-english-light-v3.0, 384 dims)")
+    parser.add_argument("--cohere-rerank-model", type=str, default="rerank-english-v3.0", help="Cohere rerank model (default: rerank-english-v3.0)")
+    
     args = parser.parse_args()
     
     # Load queries
@@ -1283,6 +1296,10 @@ def main():
             use_text_first=args.use_text_first,
             similarity_threshold=args.similarity_threshold,
             similarity_method=args.similarity_method,
+            use_cohere=args.use_cohere,
+            cohere_api_key=args.cohere_api_key,
+            cohere_embed_model=args.cohere_embed_model,
+            cohere_rerank_model=args.cohere_rerank_model,
         )
         all_results.append(result)
     

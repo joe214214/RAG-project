@@ -1,0 +1,866 @@
+[
+  {
+    "config": "baseline_feature_dense",
+    "is_minimal_baseline": false,
+    "is_baseline": true,
+    "is_best": false,
+    "queries": [
+      {
+        "query": "cost of endless pools/swim spa",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 21.67034149169922,
+        "answer_cost_usd": 0.00021480000000000002,
+        "answer_latency_ms": 1167.7722930908203,
+        "total_latency_ms": 1189.4426345825195
+      },
+      {
+        "query": "what is pcnt",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 13.99374008178711,
+        "answer_cost_usd": 0.00023085,
+        "answer_latency_ms": 1027.2986888885498,
+        "total_latency_ms": 1041.292428970337
+      },
+      {
+        "query": "what is paysky",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 14.02425765991211,
+        "answer_cost_usd": 0.00021569999999999998,
+        "answer_latency_ms": 952.7802467346191,
+        "total_latency_ms": 966.8045043945312
+      },
+      {
+        "query": "what is paydata",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 14.405488967895508,
+        "answer_cost_usd": 0.00021569999999999998,
+        "answer_latency_ms": 875.9076595306396,
+        "total_latency_ms": 890.3131484985352
+      },
+      {
+        "query": "what is paula deen's brother",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 15.848159790039062,
+        "answer_cost_usd": 0.00023564999999999998,
+        "answer_latency_ms": 913.9461517333984,
+        "total_latency_ms": 929.7943115234375
+      },
+      {
+        "query": "what is patron",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 15.510797500610352,
+        "answer_cost_usd": 0.00028844999999999994,
+        "answer_latency_ms": 947.716474533081,
+        "total_latency_ms": 963.2272720336914
+      },
+      {
+        "query": "how long is a college hockey game",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 16.015052795410156,
+        "answer_cost_usd": 0.00025995,
+        "answer_latency_ms": 1029.5608043670654,
+        "total_latency_ms": 1045.5758571624756
+      },
+      {
+        "query": " Androgen receptor define",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 14.214515686035156,
+        "answer_cost_usd": 0.00021705,
+        "answer_latency_ms": 1213.407039642334,
+        "total_latency_ms": 1227.6215553283691
+      },
+      {
+        "query": "what is patricia cornwell's latest book",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 16.11804962158203,
+        "answer_cost_usd": 0.0002679,
+        "answer_latency_ms": 657.9408645629883,
+        "total_latency_ms": 674.0589141845703
+      },
+      {
+        "query": "what is pastoral medicine",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 14.43934440612793,
+        "answer_cost_usd": 0.00024165,
+        "answer_latency_ms": 1834.3250751495361,
+        "total_latency_ms": 1848.764419555664
+      },
+      {
+        "query": "treating diabetes",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 14.104843139648438,
+        "answer_cost_usd": 0.00024314999999999997,
+        "answer_latency_ms": 2260.206699371338,
+        "total_latency_ms": 2274.3115425109863
+      },
+      {
+        "query": "treating tension headaches without medication",
+        "query_type": "olap",
+        "retrieval_latency_ms": 17.17090606689453,
+        "answer_cost_usd": 0.00016889999999999999,
+        "answer_latency_ms": 2503.425359725952,
+        "total_latency_ms": 2520.5962657928467
+      },
+      {
+        "query": "who plays storm in days of future past",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 15.491962432861328,
+        "answer_cost_usd": 0.00025485,
+        "answer_latency_ms": 614.7301197052002,
+        "total_latency_ms": 630.2220821380615
+      },
+      {
+        "query": "what is pascal's law in simple terms",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 16.196489334106445,
+        "answer_cost_usd": 0.00023174999999999997,
+        "answer_latency_ms": 2450.3300189971924,
+        "total_latency_ms": 2466.526508331299
+      },
+      {
+        "query": "what is parkland near in florida",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 15.378236770629883,
+        "answer_cost_usd": 0.0002499,
+        "answer_latency_ms": 1549.1828918457031,
+        "total_latency_ms": 1564.561128616333
+      },
+      {
+        "query": " pneumo is a prefix meaning air. Knowing this, explain why this condition is called pneumothorax",
+        "query_type": "olap",
+        "retrieval_latency_ms": 20.84517478942871,
+        "answer_cost_usd": 0.00016245,
+        "answer_latency_ms": 1541.8941974639893,
+        "total_latency_ms": 1562.739372253418
+      },
+      {
+        "query": "treatment and prognosis for lung cancer",
+        "query_type": "olap",
+        "retrieval_latency_ms": 19.443988800048828,
+        "answer_cost_usd": 0.0002319,
+        "answer_latency_ms": 3831.122875213623,
+        "total_latency_ms": 3850.566864013672
+      },
+      {
+        "query": " the knee is what type of joint ",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 15.594005584716797,
+        "answer_cost_usd": 0.00023654999999999998,
+        "answer_latency_ms": 1127.5410652160645,
+        "total_latency_ms": 1143.1350708007812
+      },
+      {
+        "query": "what is parcel service",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 13.74959945678711,
+        "answer_cost_usd": 0.00026115,
+        "answer_latency_ms": 1680.0141334533691,
+        "total_latency_ms": 1693.7637329101562
+      },
+      {
+        "query": "how long is a cubit?",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 14.434099197387695,
+        "answer_cost_usd": 0.00022559999999999998,
+        "answer_latency_ms": 606.9519519805908,
+        "total_latency_ms": 621.3860511779785
+      },
+      {
+        "query": "what is paranoid sc",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 13.837814331054688,
+        "answer_cost_usd": 0.00028064999999999996,
+        "answer_latency_ms": 1367.4578666687012,
+        "total_latency_ms": 1381.2956809997559
+      },
+      {
+        "query": "what is paper with a watermark called",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 14.595746994018555,
+        "answer_cost_usd": 0.0002109,
+        "answer_latency_ms": 590.864896774292,
+        "total_latency_ms": 605.4606437683105
+      },
+      {
+        "query": "what is pressure vessel testing and repair",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 14.42861557006836,
+        "answer_cost_usd": 0.00019229999999999999,
+        "answer_latency_ms": 896.8579769134521,
+        "total_latency_ms": 911.2865924835205
+      },
+      {
+        "query": "what is the gram molecular weight of maltose",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 14.188051223754883,
+        "answer_cost_usd": 0.00022095,
+        "answer_latency_ms": 616.1139011383057,
+        "total_latency_ms": 630.3019523620605
+      },
+      {
+        "query": "what is panama currency called",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 13.803482055664062,
+        "answer_cost_usd": 0.0002085,
+        "answer_latency_ms": 688.913106918335,
+        "total_latency_ms": 702.716588973999
+      },
+      {
+        "query": "what is pama liqueur",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 15.247821807861328,
+        "answer_cost_usd": 0.000225,
+        "answer_latency_ms": 811.2032413482666,
+        "total_latency_ms": 826.4510631561279
+      },
+      {
+        "query": "What government position was held by the woman who portrayed Corliss Archer in the film Kiss and Tell?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 18.97263526916504,
+        "answer_cost_usd": 0.0001416,
+        "answer_latency_ms": 845.7157611846924,
+        "total_latency_ms": 864.6883964538574
+      },
+      {
+        "query": "What science fantasy young adult series, told in first person, has a set of companion books narrating the stories of enslaved worlds and alien species?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 20.200252532958984,
+        "answer_cost_usd": 0.00016469999999999996,
+        "answer_latency_ms": 296.5412139892578,
+        "total_latency_ms": 316.7414665222168
+      },
+      {
+        "query": "Are the Laleli Mosque and Esma Sultan Mansion located in the same neighborhood?",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 14.970779418945312,
+        "answer_cost_usd": 0.00026505,
+        "answer_latency_ms": 1058.30979347229,
+        "total_latency_ms": 1073.2805728912354
+      },
+      {
+        "query": "The director of the romantic comedy \"Big Stone Gap\" is based in what New York city?",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 16.243457794189453,
+        "answer_cost_usd": 0.00025815,
+        "answer_latency_ms": 1086.7574214935303,
+        "total_latency_ms": 1103.0008792877197
+      },
+      {
+        "query": "Who was known by his stage name Aladin and helped organizations improve their performance as a consultant?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 20.792484283447266,
+        "answer_cost_usd": 0.00013154999999999997,
+        "answer_latency_ms": 895.963191986084,
+        "total_latency_ms": 916.7556762695312
+      },
+      {
+        "query": "The arena where the Lewiston Maineiacs played their home games can seat how many people?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 19.97685432434082,
+        "answer_cost_usd": 0.00018045000000000002,
+        "answer_latency_ms": 910.0377559661865,
+        "total_latency_ms": 930.0146102905273
+      },
+      {
+        "query": "Who is older, Annie Morton or Terry Richardson?",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 15.907049179077148,
+        "answer_cost_usd": 0.00023385000000000002,
+        "answer_latency_ms": 1158.9796543121338,
+        "total_latency_ms": 1174.886703491211
+      },
+      {
+        "query": "What is the name of the fight song of the university whose main campus is in Lawrence, Kansas and whose branch campuses are in the Kansas City metropolitan area?",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 17.61031150817871,
+        "answer_cost_usd": 0.00025184999999999997,
+        "answer_latency_ms": 713.4485244750977,
+        "total_latency_ms": 731.0588359832764
+      },
+      {
+        "query": "What screenwriter with credits for \"Evolution\" co-wrote a film starring Nicolas Cage and T\u00e9a Leoni?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 19.392728805541992,
+        "answer_cost_usd": 0.00015585,
+        "answer_latency_ms": 951.6692161560059,
+        "total_latency_ms": 971.0619449615479
+      },
+      {
+        "query": "What year did Guns N Roses perform a promo for a movie starring Arnold Schwarzenegger as a former New York Police detective?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 20.657062530517578,
+        "answer_cost_usd": 0.000222,
+        "answer_latency_ms": 991.9416904449463,
+        "total_latency_ms": 1012.5987529754639
+      },
+      {
+        "query": "Are Random House Tower and 888 7th Avenue both used for real estate?",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 16.176462173461914,
+        "answer_cost_usd": 0.0002715,
+        "answer_latency_ms": 1212.7635478973389,
+        "total_latency_ms": 1228.9400100708008
+      },
+      {
+        "query": "The football manager who recruited David Beckham managed Manchester United during what timeframe?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 20.705461502075195,
+        "answer_cost_usd": 0.0001593,
+        "answer_latency_ms": 855.1101684570312,
+        "total_latency_ms": 875.8156299591064
+      },
+      {
+        "query": "Brown State Fishing Lake is in a country that has a population of how many inhabitants ?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 19.606828689575195,
+        "answer_cost_usd": 0.000141,
+        "answer_latency_ms": 1037.842035293579,
+        "total_latency_ms": 1057.4488639831543
+      },
+      {
+        "query": "The Vermont Catamounts men's soccer team currently competes in a conference that was formerly known as what from 1988 to 1996?",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 18.807172775268555,
+        "answer_cost_usd": 0.00023055,
+        "answer_latency_ms": 862.6058101654053,
+        "total_latency_ms": 881.4129829406738
+      },
+      {
+        "query": "Roger O. Egeberg was Assistant Secretary for Health and Scientific Affairs during the administration of a president that served during what years?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 22.351503372192383,
+        "answer_cost_usd": 0.0002598,
+        "answer_latency_ms": 844.2018032073975,
+        "total_latency_ms": 866.5533065795898
+      },
+      {
+        "query": "Which writer was from England, Henry Roth or Robert Erskine Childers?",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 15.453100204467773,
+        "answer_cost_usd": 0.0002334,
+        "answer_latency_ms": 583.9524269104004,
+        "total_latency_ms": 599.4055271148682
+      },
+      {
+        "query": "This singer of A Rather Blustery Day also voiced what hedgehog?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 19.638538360595703,
+        "answer_cost_usd": 0.0001677,
+        "answer_latency_ms": 766.718864440918,
+        "total_latency_ms": 786.3574028015137
+      },
+      {
+        "query": "Aside from the Apple Remote, what other device can control the program Apple Remote was originally designed to interact with?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 20.311832427978516,
+        "answer_cost_usd": 0.0001641,
+        "answer_latency_ms": 1000.1723766326904,
+        "total_latency_ms": 1020.484209060669
+      },
+      {
+        "query": "What was the father of Kasper Schmeichel voted to be by the IFFHS in 1992?",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 15.853166580200195,
+        "answer_cost_usd": 0.00024585,
+        "answer_latency_ms": 916.846752166748,
+        "total_latency_ms": 932.6999187469482
+      },
+      {
+        "query": "Who was the writer of These Boots Are Made for Walkin' and who died in 2007?",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 15.318870544433594,
+        "answer_cost_usd": 0.00024195,
+        "answer_latency_ms": 1084.1515064239502,
+        "total_latency_ms": 1099.4703769683838
+      },
+      {
+        "query": "The 2011\u201312 VCU Rams men's basketball team, led by third year head coach Shaka Smart, represented Virginia Commonwealth University which was founded in what year?",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 16.858339309692383,
+        "answer_cost_usd": 0.00027915,
+        "answer_latency_ms": 925.7824420928955,
+        "total_latency_ms": 942.6407814025879
+      },
+      {
+        "query": "Are both Dictyosperma, and Huernia described as a genus?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 18.808364868164062,
+        "answer_cost_usd": 0.00019245,
+        "answer_latency_ms": 547.1065044403076,
+        "total_latency_ms": 565.9148693084717
+      },
+      {
+        "query": "Kaiser Ventures corporation was founded by an American industrialist who became known as the father of modern American shipbuilding?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 21.24810218811035,
+        "answer_cost_usd": 0.00017010000000000001,
+        "answer_latency_ms": 699.8507976531982,
+        "total_latency_ms": 721.0988998413086
+      },
+      {
+        "query": "What is the name for the adventure in \"Tunnels and Trolls\", a game designed by Ken St. Andre?",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 17.52638816833496,
+        "answer_cost_usd": 0.00029745,
+        "answer_latency_ms": 863.6882305145264,
+        "total_latency_ms": 881.2146186828613
+      }
+    ],
+    "total_cost_usd": 0.011051550000000002,
+    "avg_cost_per_query_usd": 0.00022103100000000003,
+    "oltp_cost_usd": 0.0082377,
+    "olap_cost_usd": 0.0028138499999999993,
+    "oltp_count": 34,
+    "olap_count": 16,
+    "total_retrieval_latency_ms": 848.1383323669434,
+    "total_answer_latency_ms": 54867.62309074402,
+    "avg_oltp_cost_usd": 0.00024228529411764708,
+    "avg_olap_cost_usd": 0.00017586562499999995,
+    "avg_retrieval_latency_ms": 16.962766647338867,
+    "avg_answer_latency_ms": 1097.3524618148804,
+    "llm_stats": {
+      "total_calls": 50,
+      "total_input_tokens": 66381,
+      "total_output_tokens": 1824,
+      "total_cost_usd": 0.011051550000000002,
+      "avg_cost_per_call_usd": 0.00022103100000000003
+    }
+  },
+  {
+    "config": "transformer_hybrid_rerank",
+    "is_minimal_baseline": false,
+    "is_baseline": false,
+    "is_best": true,
+    "queries": [
+      {
+        "query": "cost of endless pools/swim spa",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 8243.39509010315,
+        "answer_cost_usd": 0.00020835,
+        "answer_latency_ms": 909.2421531677246,
+        "total_latency_ms": 9152.637243270874
+      },
+      {
+        "query": "what is pcnt",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1137.3775005340576,
+        "answer_cost_usd": 0.0001521,
+        "answer_latency_ms": 1326.1420726776123,
+        "total_latency_ms": 2463.51957321167
+      },
+      {
+        "query": "what is paysky",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1104.6345233917236,
+        "answer_cost_usd": 0.00013035,
+        "answer_latency_ms": 1276.1797904968262,
+        "total_latency_ms": 2380.81431388855
+      },
+      {
+        "query": "what is paydata",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1077.9306888580322,
+        "answer_cost_usd": 0.00013335,
+        "answer_latency_ms": 963.6154174804688,
+        "total_latency_ms": 2041.546106338501
+      },
+      {
+        "query": "what is paula deen's brother",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1471.9483852386475,
+        "answer_cost_usd": 0.00024225,
+        "answer_latency_ms": 942.1794414520264,
+        "total_latency_ms": 2414.127826690674
+      },
+      {
+        "query": "what is patron",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1180.8109283447266,
+        "answer_cost_usd": 0.00024795,
+        "answer_latency_ms": 1229.47359085083,
+        "total_latency_ms": 2410.2845191955566
+      },
+      {
+        "query": "how long is a college hockey game",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 2936.229705810547,
+        "answer_cost_usd": 0.00023385,
+        "answer_latency_ms": 1083.132028579712,
+        "total_latency_ms": 4019.361734390259
+      },
+      {
+        "query": " Androgen receptor define",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1256.208896636963,
+        "answer_cost_usd": 0.00022784999999999998,
+        "answer_latency_ms": 1910.247802734375,
+        "total_latency_ms": 3166.456699371338
+      },
+      {
+        "query": "what is patricia cornwell's latest book",
+        "query_type": "olap",
+        "retrieval_latency_ms": 942.5971508026123,
+        "answer_cost_usd": 0.00015659999999999998,
+        "answer_latency_ms": 998.0943202972412,
+        "total_latency_ms": 1940.6914710998535
+      },
+      {
+        "query": "what is pastoral medicine",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1236.1440658569336,
+        "answer_cost_usd": 0.0001758,
+        "answer_latency_ms": 781.2826633453369,
+        "total_latency_ms": 2017.4267292022705
+      },
+      {
+        "query": "treating diabetes",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1086.3642692565918,
+        "answer_cost_usd": 0.00022635,
+        "answer_latency_ms": 2033.22172164917,
+        "total_latency_ms": 3119.5859909057617
+      },
+      {
+        "query": "treating tension headaches without medication",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1229.649543762207,
+        "answer_cost_usd": 0.0003174,
+        "answer_latency_ms": 5348.850727081299,
+        "total_latency_ms": 6578.500270843506
+      },
+      {
+        "query": "who plays storm in days of future past",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1826.2503147125244,
+        "answer_cost_usd": 0.00017475000000000002,
+        "answer_latency_ms": 878.1414031982422,
+        "total_latency_ms": 2704.3917179107666
+      },
+      {
+        "query": "what is pascal's law in simple terms",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1436.6374015808105,
+        "answer_cost_usd": 0.00015345,
+        "answer_latency_ms": 1309.361219406128,
+        "total_latency_ms": 2745.9986209869385
+      },
+      {
+        "query": "what is parkland near in florida",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1465.5587673187256,
+        "answer_cost_usd": 0.0002184,
+        "answer_latency_ms": 1182.3132038116455,
+        "total_latency_ms": 2647.871971130371
+      },
+      {
+        "query": " pneumo is a prefix meaning air. Knowing this, explain why this condition is called pneumothorax",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1452.4714946746826,
+        "answer_cost_usd": 0.00020384999999999997,
+        "answer_latency_ms": 1762.392282485962,
+        "total_latency_ms": 3214.8637771606445
+      },
+      {
+        "query": "treatment and prognosis for lung cancer",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1252.5641918182373,
+        "answer_cost_usd": 0.00028304999999999997,
+        "answer_latency_ms": 3729.6040058135986,
+        "total_latency_ms": 4982.168197631836
+      },
+      {
+        "query": " the knee is what type of joint ",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1522.1915245056152,
+        "answer_cost_usd": 0.0002208,
+        "answer_latency_ms": 1399.3163108825684,
+        "total_latency_ms": 2921.5078353881836
+      },
+      {
+        "query": "what is parcel service",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 2032.9596996307373,
+        "answer_cost_usd": 0.0002385,
+        "answer_latency_ms": 1501.9426345825195,
+        "total_latency_ms": 3534.902334213257
+      },
+      {
+        "query": "how long is a cubit?",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1352.9279232025146,
+        "answer_cost_usd": 0.00018299999999999998,
+        "answer_latency_ms": 1147.660255432129,
+        "total_latency_ms": 2500.5881786346436
+      },
+      {
+        "query": "what is paranoid sc",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1531.0935974121094,
+        "answer_cost_usd": 0.00018284999999999997,
+        "answer_latency_ms": 1768.6681747436523,
+        "total_latency_ms": 3299.7617721557617
+      },
+      {
+        "query": "what is paper with a watermark called",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1469.064474105835,
+        "answer_cost_usd": 0.00019229999999999999,
+        "answer_latency_ms": 506.2720775604248,
+        "total_latency_ms": 1975.3365516662598
+      },
+      {
+        "query": "what is pressure vessel testing and repair",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1391.7453289031982,
+        "answer_cost_usd": 0.00016755,
+        "answer_latency_ms": 2228.972911834717,
+        "total_latency_ms": 3620.718240737915
+      },
+      {
+        "query": "what is the gram molecular weight of maltose",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1499.9358654022217,
+        "answer_cost_usd": 0.00025425,
+        "answer_latency_ms": 1076.103925704956,
+        "total_latency_ms": 2576.0397911071777
+      },
+      {
+        "query": "what is panama currency called",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1681.1954975128174,
+        "answer_cost_usd": 0.00021435,
+        "answer_latency_ms": 915.4958724975586,
+        "total_latency_ms": 2596.691370010376
+      },
+      {
+        "query": "what is pama liqueur",
+        "query_type": "oltp",
+        "retrieval_latency_ms": 1667.5515174865723,
+        "answer_cost_usd": 0.00021915,
+        "answer_latency_ms": 1243.9866065979004,
+        "total_latency_ms": 2911.5381240844727
+      },
+      {
+        "query": "What government position was held by the woman who portrayed Corliss Archer in the film Kiss and Tell?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 63.877105712890625,
+        "answer_cost_usd": 0.00014205,
+        "answer_latency_ms": 1484.0331077575684,
+        "total_latency_ms": 1547.910213470459
+      },
+      {
+        "query": "What science fantasy young adult series, told in first person, has a set of companion books narrating the stories of enslaved worlds and alien species?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 78.99808883666992,
+        "answer_cost_usd": 0.00020955,
+        "answer_latency_ms": 1368.6354160308838,
+        "total_latency_ms": 1447.6335048675537
+      },
+      {
+        "query": "Are the Laleli Mosque and Esma Sultan Mansion located in the same neighborhood?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 71.99668884277344,
+        "answer_cost_usd": 0.00015884999999999999,
+        "answer_latency_ms": 1548.0642318725586,
+        "total_latency_ms": 1620.060920715332
+      },
+      {
+        "query": "The director of the romantic comedy \"Big Stone Gap\" is based in what New York city?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 95.35956382751465,
+        "answer_cost_usd": 0.0001971,
+        "answer_latency_ms": 824.4161605834961,
+        "total_latency_ms": 919.7757244110107
+      },
+      {
+        "query": "Who was known by his stage name Aladin and helped organizations improve their performance as a consultant?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 53.69067192077637,
+        "answer_cost_usd": 0.00012135000000000001,
+        "answer_latency_ms": 1040.771484375,
+        "total_latency_ms": 1094.4621562957764
+      },
+      {
+        "query": "The arena where the Lewiston Maineiacs played their home games can seat how many people?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 69.91219520568848,
+        "answer_cost_usd": 0.00014849999999999998,
+        "answer_latency_ms": 1017.4515247344971,
+        "total_latency_ms": 1087.3637199401855
+      },
+      {
+        "query": "Who is older, Annie Morton or Terry Richardson?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 57.91330337524414,
+        "answer_cost_usd": 0.0001302,
+        "answer_latency_ms": 1222.3923206329346,
+        "total_latency_ms": 1280.3056240081787
+      },
+      {
+        "query": "What is the name of the fight song of the university whose main campus is in Lawrence, Kansas and whose branch campuses are in the Kansas City metropolitan area?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 66.94936752319336,
+        "answer_cost_usd": 0.00016544999999999998,
+        "answer_latency_ms": 595.0982570648193,
+        "total_latency_ms": 662.0476245880127
+      },
+      {
+        "query": "What screenwriter with credits for \"Evolution\" co-wrote a film starring Nicolas Cage and T\u00e9a Leoni?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 69.58341598510742,
+        "answer_cost_usd": 0.0001728,
+        "answer_latency_ms": 1044.8517799377441,
+        "total_latency_ms": 1114.4351959228516
+      },
+      {
+        "query": "What year did Guns N Roses perform a promo for a movie starring Arnold Schwarzenegger as a former New York Police detective?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 80.31964302062988,
+        "answer_cost_usd": 0.0002289,
+        "answer_latency_ms": 1443.3448314666748,
+        "total_latency_ms": 1523.6644744873047
+      },
+      {
+        "query": "Are Random House Tower and 888 7th Avenue both used for real estate?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 65.68050384521484,
+        "answer_cost_usd": 0.00023475,
+        "answer_latency_ms": 1683.117151260376,
+        "total_latency_ms": 1748.7976551055908
+      },
+      {
+        "query": "The football manager who recruited David Beckham managed Manchester United during what timeframe?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 63.606977462768555,
+        "answer_cost_usd": 0.0001806,
+        "answer_latency_ms": 814.483642578125,
+        "total_latency_ms": 878.0906200408936
+      },
+      {
+        "query": "Brown State Fishing Lake is in a country that has a population of how many inhabitants ?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 51.079750061035156,
+        "answer_cost_usd": 0.00017204999999999998,
+        "answer_latency_ms": 1493.9336776733398,
+        "total_latency_ms": 1545.013427734375
+      },
+      {
+        "query": "The Vermont Catamounts men's soccer team currently competes in a conference that was formerly known as what from 1988 to 1996?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 69.37837600708008,
+        "answer_cost_usd": 0.00020955,
+        "answer_latency_ms": 1103.7180423736572,
+        "total_latency_ms": 1173.0964183807373
+      },
+      {
+        "query": "Roger O. Egeberg was Assistant Secretary for Health and Scientific Affairs during the administration of a president that served during what years?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 92.90885925292969,
+        "answer_cost_usd": 0.00026415,
+        "answer_latency_ms": 3488.002300262451,
+        "total_latency_ms": 3580.911159515381
+      },
+      {
+        "query": "Which writer was from England, Henry Roth or Robert Erskine Childers?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 71.51937484741211,
+        "answer_cost_usd": 0.00014235,
+        "answer_latency_ms": 753.9129257202148,
+        "total_latency_ms": 825.432300567627
+      },
+      {
+        "query": "This singer of A Rather Blustery Day also voiced what hedgehog?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 86.0595703125,
+        "answer_cost_usd": 0.00018855,
+        "answer_latency_ms": 1087.9464149475098,
+        "total_latency_ms": 1174.0059852600098
+      },
+      {
+        "query": "Aside from the Apple Remote, what other device can control the program Apple Remote was originally designed to interact with?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 70.87540626525879,
+        "answer_cost_usd": 0.00016920000000000002,
+        "answer_latency_ms": 1362.8382682800293,
+        "total_latency_ms": 1433.713674545288
+      },
+      {
+        "query": "What was the father of Kasper Schmeichel voted to be by the IFFHS in 1992?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 67.1682357788086,
+        "answer_cost_usd": 0.00011775,
+        "answer_latency_ms": 816.6439533233643,
+        "total_latency_ms": 883.8121891021729
+      },
+      {
+        "query": "Who was the writer of These Boots Are Made for Walkin' and who died in 2007?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 64.62407112121582,
+        "answer_cost_usd": 0.00015375,
+        "answer_latency_ms": 1015.2642726898193,
+        "total_latency_ms": 1079.8883438110352
+      },
+      {
+        "query": "The 2011\u201312 VCU Rams men's basketball team, led by third year head coach Shaka Smart, represented Virginia Commonwealth University which was founded in what year?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 92.87858009338379,
+        "answer_cost_usd": 0.0002898,
+        "answer_latency_ms": 623.9955425262451,
+        "total_latency_ms": 716.8741226196289
+      },
+      {
+        "query": "Are both Dictyosperma, and Huernia described as a genus?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 87.1732234954834,
+        "answer_cost_usd": 0.00018135000000000002,
+        "answer_latency_ms": 640.0315761566162,
+        "total_latency_ms": 727.2047996520996
+      },
+      {
+        "query": "Kaiser Ventures corporation was founded by an American industrialist who became known as the father of modern American shipbuilding?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 73.31323623657227,
+        "answer_cost_usd": 0.0001746,
+        "answer_latency_ms": 680.1681518554688,
+        "total_latency_ms": 753.481388092041
+      },
+      {
+        "query": "What is the name for the adventure in \"Tunnels and Trolls\", a game designed by Ken St. Andre?",
+        "query_type": "olap",
+        "retrieval_latency_ms": 65.41061401367188,
+        "answer_cost_usd": 0.00013169999999999998,
+        "answer_latency_ms": 652.1670818328857,
+        "total_latency_ms": 717.5776958465576
+      }
+    ],
+    "total_cost_usd": 0.00964335,
+    "avg_cost_per_query_usd": 0.000192867,
+    "oltp_cost_usd": 0.005201850000000001,
+    "olap_cost_usd": 0.004441499999999999,
+    "oltp_count": 25,
+    "olap_count": 25,
+    "total_retrieval_latency_ms": 46215.715169906616,
+    "total_answer_latency_ms": 67257.1747303009,
+    "avg_oltp_cost_usd": 0.00020807400000000004,
+    "avg_olap_cost_usd": 0.00017765999999999998,
+    "avg_retrieval_latency_ms": 924.3143033981323,
+    "avg_answer_latency_ms": 1345.143494606018,
+    "llm_stats": {
+      "total_calls": 50,
+      "total_input_tokens": 56165,
+      "total_output_tokens": 2031,
+      "total_cost_usd": 0.00964335,
+      "avg_cost_per_call_usd": 0.000192867
+    }
+  },
+  {
+    "comparisons": {
+      "baseline_vs_best": {
+        "cost_increase": -2.8164000000000037e-05,
+        "cost_increase_pct": -12.742104048753355,
+        "latency_increase_ms": 907.3515367507935,
+        "latency_increase_pct": 5349.077515566362
+      }
+    }
+  }
+]
